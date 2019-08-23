@@ -1,0 +1,18 @@
+.user-current {
+    color: green;
+    font-weight: bold;
+}
+
+.info {
+    color: gray;
+}
+
+table{
+    margin-top: 20px;
+}
+
+td{
+    border: 1px solid black;
+    height: 30px;
+    width: 30px;
+}
