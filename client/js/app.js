@@ -1,29 +1,5 @@
 import io from "socket.io-client";
 
-const colors =
-    [{
-        "name": "Polaroid:blue",
-        "value": "#00a3e2"
-    },
-    {
-        "name": "Polaroid:green",
-        "value": "#1ba548"
-    },
-    {
-        "name": "Polaroid:yellow",
-        "value": "#fdc800"
-    },
-    {
-        "name": "Polaroid:orange",
-        "value": "#f1860e"
-    },
-    {
-        "name": "Polaroid:red",
-        "value": "#e41b13"
-    }];
-
-const colorPickerMessage = colors.reduce((acc, c, i) => { acc += `${i}) ${c.name}\n\r`; return acc; }, "");
-
 export default class App {
     constructor() {
         console.info(`App is started at ${(new Date()).toLocaleString()}`);
@@ -41,13 +17,7 @@ export default class App {
             this.user = prompt("What is your name?");
         }
 
-        while (this.color === undefined || this.color === null || isNaN(parseInt(this.color)) || parseInt(this.color) < 0 || parseInt(this.color) >= colors.length) {
-            this.color = prompt(`What is your favorite color?\n\r${colorPickerMessage}`);
-        }
-
-        this.color = colors[this.color].value;
-
-        this.socket.emit("user:login", { name: this.user, color: this.color });
+        this.socket.emit("user:login", { name: this.user });
     }
 
     run() {
@@ -82,12 +52,27 @@ export default class App {
         };
 
         const addUser = (user) => {
+            console.info(user);
+
             let newDiv = document.createElement("p");
             newDiv.id = user.name;
             newDiv.style.color = user.color;
             let newContent = document.createTextNode(user.name);
             newDiv.appendChild(newContent);
             users.appendChild(newDiv);
+
+            let unit = document.createElement("div");
+            unit.id = user.name;
+            unit.style.color = "#FFFFFF";
+            unit.style.backgroundColor = user.color;
+            unit.style.textAlign = "center";
+            unit.style.height = "100%";
+            unit.style.width = "100%";
+            let unitName = document.createTextNode(user.name.substring(0, 1).toUpperCase());
+            unit.appendChild(unitName);
+            const query = `td[x="${user.position.x}"][y="${user.position.y}"]`;
+            const target = document.querySelector(query);
+            target.appendChild(unit);
         };
 
         const deleteUser = (user) => {

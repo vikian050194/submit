@@ -1,16 +1,40 @@
 const port = process.env.PORT || 8080;
 
-const express = require("express"),
-    bodyParser = require("body-parser"),
-    app = express(),
-    server = require("http").createServer(app),
-    io = require("socket.io")(server),
-    Repository = require("./repository"),
-    repository = new Repository();
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
+const Repository = require("./repository");
+const repository = new Repository();
+const randomInt = require("random-int");
+
+const config = require("./config.json");
 
 const systemUser = {
     name: "SYSTEM",
     color: "#D3D3D3"
+};
+
+const getPosition = () => {
+    return {
+        x: randomInt(0, config.size.x - 1),
+        y: randomInt(0, config.size.y - 1)
+    };
+};
+
+const getColor = () => {
+    let color = null;
+    let index = null;
+
+    const users = repository.getUsers();
+
+    do {
+        index = randomInt(0, config.colors.length - 1);
+        color = config.colors[index].value;
+    } while ((users.filter((u) => u.color === color).length !== 0));
+
+    return color;
 };
 
 io.on("connection", function (client) {
@@ -23,6 +47,8 @@ io.on("connection", function (client) {
     });
 
     client.on("user:login", function (user) {
+        user.position = getPosition();
+        user.color = getColor();
         client.user = user;
 
         console.info(`"${user.name}" is logged in`);

@@ -1,20 +1,33 @@
 export default () => {
-    const x = 20;
-    const y = 20;
-    const table = $("table")[0];
-    let content = "";
+    function httpGetAsync(theUrl, callback) {
+        var xmlHttp = new XMLHttpRequest();
 
-    for (let i = 0; i < y; i++) {
-        let row = "<tr>";
-        
-        for (let j = 0; j < x; j++) {
-            // row += `<td>${i}:${j}</td>`;
-            row += "<td></td>";
-        }
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        };
 
-        row += "</tr>";  
-        content += row;  
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+        xmlHttp.send(null);
     }
 
-    table.innerHTML = content;
+    httpGetAsync("/config", (body) => {
+        const { x, y } = JSON.parse(body).size;
+
+        const table = $("table")[0];
+        let content = "";
+
+        for (let i = 0; i < y; i++) {
+            let row = "<tr>";
+
+            for (let j = 0; j < x; j++) {
+                row += `<td x=${j} y="${i}"></td>`;
+            }
+
+            row += "</tr>";
+            content += row;
+        }
+
+        table.innerHTML = content;
+    });
 };
