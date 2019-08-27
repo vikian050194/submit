@@ -10,6 +10,20 @@ export default class App {
         window.addEventListener("beforeunload", () => {
             this.socket.emit("user:logout", this.user);
         });
+
+        const buttonKeys = [
+            "ArrowUp",
+            "ArrowDown",
+            "ArrowLeft",
+            "ArrowRight"
+        ];
+
+        document.addEventListener("keydown", (e) => {
+            if (buttonKeys.indexOf(e.key) !== -1) {
+                const direction = e.key.substring(5, e.key.length);
+                this.socket.emit("action:move", direction);
+            }
+        });
     }
 
     login() {
@@ -25,7 +39,7 @@ export default class App {
         const users = document.querySelector("#users");
         const form = document.querySelector("form");
         const input = document.querySelector("input");
-        input.focus();
+        // input.focus();
 
         const sendNewMessage = (message) => {
             this.socket.emit("message:send", message);
@@ -51,16 +65,7 @@ export default class App {
             }
         };
 
-        const addUser = (user) => {
-            console.info(user);
-
-            let newDiv = document.createElement("p");
-            newDiv.id = user.name;
-            newDiv.style.color = user.color;
-            let newContent = document.createTextNode(user.name);
-            newDiv.appendChild(newContent);
-            users.appendChild(newDiv);
-
+        const addUserUnit = (user) => {
             let unit = document.createElement("div");
             unit.id = user.name;
             unit.style.color = "#FFFFFF";
@@ -75,8 +80,27 @@ export default class App {
             target.appendChild(unit);
         };
 
+        const addUser = (user) => {
+            console.info(user);
+
+            let newDiv = document.createElement("p");
+            newDiv.id = user.name;
+            newDiv.style.color = user.color;
+            let newContent = document.createTextNode(user.name);
+            newDiv.appendChild(newContent);
+            users.appendChild(newDiv);
+
+            addUserUnit(user);
+        };
+
         const deleteUser = (user) => {
-            document.getElementById(user.name).remove();
+            document.querySelector(`p[id="${user.name}"]`).remove();
+            document.querySelector(`div[id="${user.name}"]`).remove();
+        };
+
+        const moveUser = (user) => {
+            document.querySelector(`div[id="${user.name}"]`).remove();
+            addUserUnit(user);
         };
 
         this.login();
@@ -84,5 +108,8 @@ export default class App {
         this.socket.on("user:login", addUser);
         this.socket.on("user:logout", deleteUser);
         this.socket.on("message:new", addMessage);
+        this.socket.on("user:move", moveUser);
+
+        document.querySelector("table").focus();
     }
 }

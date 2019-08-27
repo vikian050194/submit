@@ -107,6 +107,36 @@ io.on("connection", function (client) {
         repository.addMessage(data);
     });
 
+    client.on("action:move", function (direction) {
+        switch (direction) {
+            case "Up":
+                if(this.user.position.y !== 0){
+                    this.user.position.y--;
+                }
+                break;
+            case "Down":
+                if(this.user.position.y !== config.size.y - 1){
+                    this.user.position.y++;
+                }
+                break;
+            case "Left":
+                if(this.user.position.x !== 0){
+                    this.user.position.x--;
+                }
+                break;
+            case "Right":
+                if(this.user.position.x !== config.size.x - 1){
+                    this.user.position.x++;
+                }
+                break;
+            default:
+                break;
+        }
+
+        client.emit("user:move", this.user);
+        client.broadcast.emit("user:move", this.user);
+    });
+
     console.info("New user is connected");
 });
 
