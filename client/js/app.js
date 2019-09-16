@@ -19,10 +19,12 @@ export default class App {
         ];
 
         document.addEventListener("keydown", (e) => {
-            if (buttonKeys.indexOf(e.key) !== -1) {
-                const direction = e.key.substring(5, e.key.length);
-                this.socket.emit("action:move", direction);
+            if (buttonKeys.indexOf(e.key) === -1) {
+                return;
             }
+
+            const direction = e.key.substring(5, e.key.length);
+            this.socket.emit("action:move", direction);
         });
     }
 
@@ -39,7 +41,6 @@ export default class App {
         const users = document.querySelector("#users");
         const form = document.querySelector("form");
         const input = document.querySelector("input");
-        // input.focus();
 
         const sendNewMessage = (message) => {
             this.socket.emit("message:send", message);
@@ -67,7 +68,7 @@ export default class App {
 
         const addUserUnit = (user) => {
             let unit = document.createElement("div");
-            unit.id = user.name;
+            unit.id = user.id;
             unit.style.color = "#FFFFFF";
             unit.style.backgroundColor = user.color;
             unit.style.textAlign = "center";
@@ -95,11 +96,11 @@ export default class App {
 
         const deleteUser = (user) => {
             document.querySelector(`p[id="${user.name}"]`).remove();
-            document.querySelector(`div[id="${user.name}"]`).remove();
+            document.querySelector(`div[id="${user.id}"]`).remove();
         };
 
         const moveUser = (user) => {
-            document.querySelector(`div[id="${user.name}"]`).remove();
+            document.querySelector(`div[id="${user.id}"]`).remove();
             addUserUnit(user);
         };
 

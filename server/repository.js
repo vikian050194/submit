@@ -10,15 +10,15 @@ module.exports = class Repository {
 
     addMessage(data) {
         this.messages.push(data);
-        
+
         if (this.messages.length > 10) {
             this.messages.shift();
         }
     }
 
-    addUser(userName) {
-        if(this.users.indexOf(userName)===-1){
-            this.users.push(userName);
+    addUser(user) {
+        if (this.users.indexOf(user) === -1) {
+            this.users.push(user);
         }
     }
 
@@ -26,8 +26,8 @@ module.exports = class Repository {
         return this.users;
     }
 
-    removeUser(userName){
-        var index = this.users.indexOf(userName);
+    removeUser(user) {
+        var index = this.users.indexOf(user);
         this.users.splice(index);
     }
 };

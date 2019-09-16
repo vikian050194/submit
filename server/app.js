@@ -7,7 +7,9 @@ const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 const Repository = require("./repository");
 const repository = new Repository();
+
 const randomInt = require("random-int");
+const nanoid = require("nanoid");
 
 const config = require("./config.json");
 
@@ -49,6 +51,8 @@ io.on("connection", function (client) {
     client.on("user:login", function (user) {
         user.position = getPosition();
         user.color = getColor();
+        user.id = nanoid();
+
         client.user = user;
 
         console.info(`"${user.name}" is logged in`);
@@ -57,6 +61,7 @@ io.on("connection", function (client) {
         client.broadcast.emit("user:login", user);
 
         repository.addUser(user);
+
         repository.addMessage({
             user: systemUser,
             message: `${user.name} is logged in`
@@ -108,33 +113,43 @@ io.on("connection", function (client) {
     });
 
     client.on("action:move", function (direction) {
+        const { user } = client;
+        let { x, y } = user.position;
+
         switch (direction) {
             case "Up":
-                if(this.user.position.y !== 0){
-                    this.user.position.y--;
-                }
+                y--;
                 break;
             case "Down":
-                if(this.user.position.y !== config.size.y - 1){
-                    this.user.position.y++;
-                }
+                y++;
                 break;
             case "Left":
-                if(this.user.position.x !== 0){
-                    this.user.position.x--;
-                }
+                x--;
                 break;
             case "Right":
-                if(this.user.position.x !== config.size.x - 1){
-                    this.user.position.x++;
-                }
+                x++;
                 break;
             default:
                 break;
         }
 
-        client.emit("user:move", this.user);
-        client.broadcast.emit("user:move", this.user);
+        const isUnitOutsideLeftBorder = x < 0;
+        const isUnitOutsideRightBorder = x >= config.size.x;
+        const isUnitOutsideTopBorder = y < 0;
+        const isUnitOutsideBottomBorder = y >= config.size.y;
+        const isUnitIntersectSomething = repository.getUsers().filter(({ position }) => position.x === x && position.y === y).length !== 0;
+
+        if (!isUnitOutsideLeftBorder &&
+            !isUnitOutsideRightBorder &&
+            !isUnitOutsideTopBorder &&
+            !isUnitOutsideBottomBorder &&
+            !isUnitIntersectSomething) {
+            user.position.x = x;
+            user.position.y = y;
+
+            client.emit("user:move", user);
+            client.broadcast.emit("user:move", user);
+        }
     });
 
     console.info("New user is connected");
