@@ -1,8 +1,9 @@
 {
-  "name": "chat",
+  "name": "square",
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "start": "node server/app.js",
     "client:dev": "webpack -w",
     "client:build": "webpack",
     "client:release": "webpack --config webpack.production.config.js",

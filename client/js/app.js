@@ -29,28 +29,37 @@ export default class App {
     }
 
     login() {
-        while (this.user === undefined || this.user === null || this.user.length === 0) {
-            this.user = prompt("What is your name?");
-        }
+        let form = document.querySelector("#login");
+        let input = form.querySelector("input");
+        input.focus();
 
-        this.socket.emit("user:login", { name: this.user });
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            if (this.user === undefined || this.user === null || this.user.length === 0) {
+                this.user = input.value;
+                input.value = "";
+                this.socket.emit("user:login", { name: this.user });
+                document.querySelector("#login").setAttribute("hidden", "true");
+                document.querySelector("#game").removeAttribute("hidden");
+                document.querySelector("table").focus();
+            }
+        });
+
     }
 
     run() {
         const chat = document.querySelector("#chat");
         const users = document.querySelector("#users");
-        const form = document.querySelector("form");
+        const chatForm = document.querySelector("#chat");
         const input = document.querySelector("input");
 
         const sendNewMessage = (message) => {
             this.socket.emit("message:send", message);
         };
 
-        form.addEventListener("submit", (e) => {
+        chatForm.addEventListener("submit", (e) => {
             e.preventDefault();
-
             sendNewMessage(input.value);
-
             input.value = "";
         });
 
@@ -110,7 +119,5 @@ export default class App {
         this.socket.on("user:logout", deleteUser);
         this.socket.on("message:new", addMessage);
         this.socket.on("user:move", moveUser);
-
-        document.querySelector("table").focus();
     }
 }

@@ -1,4 +1,5 @@
 {
+    "appService.zipIgnorePattern": [".vscode*/**", "node_modules{,/**}"],
     "workbench.colorCustomizations": {
         "titleBar.activeBackground": "#5a8800",
         "titleBar.inactiveBackground": "#5a880099",
