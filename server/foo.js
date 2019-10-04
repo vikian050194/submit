@@ -3,6 +3,27 @@ const repository = new Repository();
 
 const randomInt = require("random-int");
 const nanoid = require("nanoid");
+const notifier = require("node-notifier");
+const path = require("path");
+
+const notify = (message) => {
+    console.info(message);
+    // const callback = (error, response) => {
+    //     console.info(response);
+    // };
+    const options = {
+        title: "Square", // String. Required
+        message: message, // String. Required if remove is not defined
+        icon: path.join(__dirname, "../", "client", "build", "favicon.png"), // String. Absolute path to Icon
+        sound: false, // Bool | String (as defined by http://msdn.microsoft.com/en-us/library/windows/apps/hh761492.aspx)
+        id: undefined, // Number. ID to use for closing notification.
+        appID: "Square", // String. App.ID and app Name. Defaults to no value, causing SnoreToast text to be visible.
+        remove: undefined, // Number. Refer to previously created notification to close.
+        install: undefined // String (path, application, app id).  Creates a shortcut <path> in the start menu which point to the executable <application>, appID used for the notifications.
+    };
+
+    new notifier.WindowsBalloon(options).notify(options);
+};
 
 const config = require("./config.json");
 
@@ -49,7 +70,7 @@ const Foo = (socketServer) => {
 
             client.user = user;
 
-            console.info(`"${user.name}" is logged in`);
+            notify(`"${user.name}" is logged in`);
 
             client.emit("user:login", user);
             client.broadcast.emit("user:login", user);
@@ -75,7 +96,7 @@ const Foo = (socketServer) => {
                 return;
             }
 
-            console.info(`"${client.user.name}" is logged out`);
+            notify(`"${client.user.name}" is logged out`);
 
             client.broadcast.emit("user:logout", client.user);
 
