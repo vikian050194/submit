@@ -21,7 +21,7 @@ export default () => {
             let row = "<tr>";
 
             for (let j = 0; j < x; j++) {
-                row += `<td x=${j} y="${i}"></td>`;
+                row += `<td x=${j} y="${i}"><div class="square"></div></td>`;
             }
 
             row += "</tr>";

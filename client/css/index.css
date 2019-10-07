@@ -1,18 +1,56 @@
-.user-current {
-    color: green;
-    font-weight: bold;
+.container{
+    height: 100%;
 }
 
-.info {
-    color: gray;
+.hidden{
+    display: none;
 }
 
-table{
-    margin-top: 20px;
+.login{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login form{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.game{
+    display: flex;
+}
+
+.game > div{
+    margin: 10px;
 }
 
 td{
-    border: 1px solid black;
-    height: 30px;
+    border: 1px dotted lightgrey;
+}
+
+.square{
     width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.unit{
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.wall{
+    border: 2px solid white;
+    border-radius: 5px;
+    background-color: grey;
+}
+
+.user{
+    color: white;
+    border-radius: 5px;
+    text-align: center;
 }

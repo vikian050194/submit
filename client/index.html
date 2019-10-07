@@ -12,23 +12,21 @@
 </head>
 
 <body>
-    <div class="container">
-        <div id="login" class="row">
-            <form autocomplete="off" id="login" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div id="root">
+        <div id="login" class="login">
+            <form autocomplete="off">
                 <input placeholder="Type your nickname here..." autocomplete="false" />
                 <button>Login</button>
             </form>
         </div>
-        <div id="game" class="row" hidden>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div id="game" class="game hidden">
+            <div>
                 <h1>Field</h1>
                 <table></table>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div>
                 <h1>Users</h1>
                 <div id="users"></div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <h1>Chat</h1>
                 <div id="chat"></div>
                 <form autocomplete="off" id="chat">

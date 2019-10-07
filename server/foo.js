@@ -40,17 +40,15 @@ const getPosition = () => {
 };
 
 const getColor = () => {
-    let color = null;
     let index = null;
 
     const users = repository.getUsers();
 
     do {
-        index = randomInt(0, config.colors.length - 1);
-        color = config.colors[index].value;
-    } while ((users.filter((u) => u.color === color).length !== 0));
+        index = randomInt(0, config.colors - 1);
+    } while ((users.filter((u) => u.color === index).length !== 0));
 
-    return color;
+    return index;
 };
 
 const Foo = (socketServer) => {

@@ -29,7 +29,7 @@ export default class App {
     }
 
     login() {
-        let form = document.querySelector("#login");
+        let form = document.querySelector("#login form");
         let input = form.querySelector("input");
         input.focus();
 
@@ -39,8 +39,8 @@ export default class App {
                 this.user = input.value;
                 input.value = "";
                 this.socket.emit("user:login", { name: this.user });
-                document.querySelector("#login").setAttribute("hidden", "true");
-                document.querySelector("#game").removeAttribute("hidden");
+                document.querySelector(".login").classList.add("hidden");
+                document.querySelector(".game").classList.remove("hidden");
                 document.querySelector("table").focus();
             }
         });
@@ -79,15 +79,12 @@ export default class App {
             let unit = document.createElement("div");
             unit.id = user.id;
             unit.style.color = "#FFFFFF";
-            unit.style.backgroundColor = user.color;
-            unit.style.textAlign = "center";
-            unit.style.height = "100%";
-            unit.style.width = "100%";
+            unit.classList.add("square", "unit", `color-${user.color}`);
             let unitName = document.createTextNode(user.name.substring(0, 1).toUpperCase());
             unit.appendChild(unitName);
-            const query = `td[x="${user.position.x}"][y="${user.position.y}"]`;
+            const query = `td[x="${user.position.x}"][y="${user.position.y}"] `;
             const target = document.querySelector(query);
-            target.appendChild(unit);
+            target.firstChild.replaceWith(unit);
         };
 
         const addUser = (user) => {
@@ -95,7 +92,7 @@ export default class App {
 
             let newDiv = document.createElement("p");
             newDiv.id = user.name;
-            newDiv.style.color = user.color;
+            newDiv.classList.add("user",`color-${user.color}`);
             let newContent = document.createTextNode(user.name);
             newDiv.appendChild(newContent);
             users.appendChild(newDiv);
@@ -103,13 +100,20 @@ export default class App {
             addUserUnit(user);
         };
 
+        const getEmpty = () => {
+            const empty = document.createElement("div");
+            empty.classList.add("square");
+
+            return empty;
+        };
+
         const deleteUser = (user) => {
             document.querySelector(`p[id="${user.name}"]`).remove();
-            document.querySelector(`div[id="${user.id}"]`).remove();
+            document.querySelector(`div[id="${user.id}"]`).replaceWith(getEmpty());
         };
 
         const moveUser = (user) => {
-            document.querySelector(`div[id="${user.id}"]`).remove();
+            document.querySelector(`div[id="${user.id}"]`).replaceWith(getEmpty());
             addUserUnit(user);
         };
 
