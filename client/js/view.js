@@ -1,4 +1,4 @@
-export default () => {
+export default (externalCallback) => {
     function httpGetAsync(theUrl, callback) {
         var xmlHttp = new XMLHttpRequest();
 
@@ -14,14 +14,14 @@ export default () => {
     httpGetAsync("/config", (body) => {
         const { x, y } = JSON.parse(body).size;
 
-        const table = $("table")[0];
+        const table = document.querySelector("table");
         let content = "";
 
         for (let i = 0; i < y; i++) {
             let row = "<tr>";
 
             for (let j = 0; j < x; j++) {
-                row += `<td x=${j} y="${i}"><div class="square"></div></td>`;
+                row += `<td x=${j} y="${i}"><div class="square wall"></div></td>`;
             }
 
             row += "</tr>";
@@ -29,5 +29,7 @@ export default () => {
         }
 
         table.innerHTML = content;
+
+        externalCallback();
     });
 };

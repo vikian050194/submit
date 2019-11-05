@@ -13,26 +13,30 @@
 
 <body>
     <div id="root">
-        <div id="login" class="login">
-            <form autocomplete="off">
-                <input placeholder="Type your nickname here..." autocomplete="false" />
-                <button>Login</button>
+        <div class="page login-page">
+            <form autocomplete="off" class="login">
+                <input placeholder="Type your nickname here..." autocomplete="off" class="login__input" />
+                <button class="login__button">Login</button>
             </form>
         </div>
-        <div id="game" class="game hidden">
+        <div class="page game-page hidden">
             <div>
                 <h1>Field</h1>
                 <table></table>
             </div>
             <div>
-                <h1>Users</h1>
-                <div id="users"></div>
-                <h1>Chat</h1>
-                <div id="chat"></div>
-                <form autocomplete="off" id="chat">
-                    <input placeholder="Type your text here..." name="description" autocomplete="false" />
-                    <button>Send</button>
-                </form>
+                <div class="users">
+                    <h1>Users</h1>
+                    <div class="users__list"></div>
+                </div>
+                <div class="chat">
+                    <h1>Chat</h1>
+                    <div class="chat__history"></div>
+                    <form autocomplete="off" class="chat">
+                        <input placeholder="Type your message here..." name="description" autocomplete="off" />
+                        <button>Send</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

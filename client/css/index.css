@@ -3,27 +3,26 @@
 }
 
 .hidden{
-    display: none;
+    display: none !important;
 }
 
-.login{
+.page{
     height: 100vh;
     width: 100vw;
     display: flex;
+}
+
+.login-page{
     justify-content: center;
     align-items: center;
 }
 
-.login form{
+.login{
     display: table-cell;
     vertical-align: middle;
 }
 
-.game{
-    display: flex;
-}
-
-.game > div{
+.game-page > div{
     margin: 10px;
 }
 
@@ -35,22 +34,36 @@ td{
     width: 30px;
     height: 30px;
     line-height: 30px;
+    border-radius: 5px;
     text-align: center;
 }
 
 .unit{
-    border: 1px solid white;
-    border-radius: 5px;
+    border-width:  1px;
+    border-style: solid;
+    border-color:  white;
 }
 
 .wall{
-    border: 2px solid white;
-    border-radius: 5px;
-    background-color: grey;
+    border-width:  2px;
+    border-style: solid;
+    border-color:  grey;
+    background-color: lightgrey;
+}
+
+.let{
+    border-width:  2px;
+    border-style: solid;
+    border-color:  ghostwhite;
+    background-color: lightgrey;
+}
+
+h1{
+    text-align: center;
 }
 
 .user{
     color: white;
-    border-radius: 5px;
     text-align: center;
+    border-radius: 5px;
 }

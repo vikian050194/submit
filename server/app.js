@@ -6,9 +6,9 @@ const expressApplication = express();
 const server = require("http").createServer(expressApplication);
 const socketServer = require("socket.io")(server);
 
-const foo = require("./foo");
+const api = require("./api");
 
-foo(socketServer);
+api(socketServer);
 
 expressApplication.use(bodyParser.json());
 expressApplication.use(bodyParser.urlencoded({ extended: true }));

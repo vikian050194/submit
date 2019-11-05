@@ -3,33 +3,12 @@ const repository = new Repository();
 
 const randomInt = require("random-int");
 const nanoid = require("nanoid");
-const notifier = require("node-notifier");
-const path = require("path");
-
-const notify = (message) => {
-    console.info(message);
-    // const callback = (error, response) => {
-    //     console.info(response);
-    // };
-    const options = {
-        title: "Square", // String. Required
-        message: message, // String. Required if remove is not defined
-        icon: path.join(__dirname, "../", "client", "build", "favicon.png"), // String. Absolute path to Icon
-        sound: false, // Bool | String (as defined by http://msdn.microsoft.com/en-us/library/windows/apps/hh761492.aspx)
-        id: undefined, // Number. ID to use for closing notification.
-        appID: "Square", // String. App.ID and app Name. Defaults to no value, causing SnoreToast text to be visible.
-        remove: undefined, // Number. Refer to previously created notification to close.
-        install: undefined // String (path, application, app id).  Creates a shortcut <path> in the start menu which point to the executable <application>, appID used for the notifications.
-    };
-
-    new notifier.WindowsBalloon(options).notify(options);
-};
 
 const config = require("./config.json");
 
 const systemUser = {
     name: "SYSTEM",
-    color: "#D3D3D3"
+    color: "s"
 };
 
 const getPosition = () => {
@@ -51,27 +30,27 @@ const getColor = () => {
     return index;
 };
 
-const Foo = (socketServer) => {
+const Api = (socketServer) => {
     socketServer.on("connection", function (client) {
-        repository.getUsers().forEach(u => {
-            client.emit("user:login", u);
-        });
-
-        repository.getMessages().forEach(m => {
-            client.emit("message:new", m);
-        });
-
-        client.on("user:login", function (user) {
+        client.on("login", function (user) {
             user.position = getPosition();
             user.color = getColor();
             user.id = nanoid();
 
             client.user = user;
 
-            notify(`"${user.name}" is logged in`);
+            console.info(`"${user.name}" is logged in`);
 
-            client.emit("user:login", user);
-            client.broadcast.emit("user:login", user);
+            repository.getUsers().forEach(u => {
+                client.emit("login", u);
+            });
+    
+            repository.getMessages().forEach(m => {
+                client.emit("message", m);
+            });
+
+            client.emit("login", user);
+            client.broadcast.emit("login", user);
 
             repository.addUser(user);
 
@@ -79,48 +58,48 @@ const Foo = (socketServer) => {
                 user: systemUser,
                 message: `${user.name} is logged in`
             });
-            client.emit("message:new", {
+            client.emit("message", {
                 user: systemUser,
                 message: `${user.name} is logged in`
             });
-            client.broadcast.emit("message:new", {
+            client.broadcast.emit("message", {
                 user: systemUser,
                 message: `${user.name} is logged in`
             });
         });
 
-        client.on("user:logout", function () {
+        client.on("logout", function () {
             if (client.user === undefined) {
                 return;
             }
 
-            notify(`"${client.user.name}" is logged out`);
+            console.info(`"${client.user.name}" is logged out`);
 
-            client.broadcast.emit("user:logout", client.user);
+            client.broadcast.emit("logout", client.user);
 
             repository.removeUser(client.user);
             repository.addMessage({
                 user: systemUser,
                 message: `${client.user.name} is logged out`
             });
-            client.emit("message:new", {
+            client.emit("message", {
                 user: systemUser,
                 message: `${client.user.name} is logged out`
             });
-            client.broadcast.emit("message:new", {
+            client.broadcast.emit("message", {
                 user: systemUser,
                 message: `${client.user.name} is logged out`
             });
         });
 
-        client.on("message:send", function (message) {
+        client.on("message", function (message) {
             var data = {
                 user: client.user,
                 message
             };
 
-            client.emit("message:new", data);
-            client.broadcast.emit("message:new", data);
+            client.emit("message", data);
+            client.broadcast.emit("message", data);
 
             repository.addMessage(data);
         });
@@ -169,4 +148,4 @@ const Foo = (socketServer) => {
     });
 };
 
-module.exports = Foo;
+module.exports = Api;

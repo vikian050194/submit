@@ -8,10 +8,8 @@
     },
     "extends": "eslint:recommended",
     "env": {
-        "jquery": true,
         "browser": true,
         "node": true,
-        "mocha": true,
         "es6": true
     },
     "rules": {
@@ -21,6 +19,7 @@
         "no-multiple-empty-lines": [ "error", { "max": 1 } ],
         "linebreak-style": [ "error", "windows"],
         "no-console": [ "warn", { "allow": [ "info", "error" ] } ],
-        "comma-dangle": ["error", "never"]
+        "comma-dangle": ["error", "never"],
+        "no-debugger": [ "warn" ]
     }
 }

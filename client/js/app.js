@@ -1,127 +1,105 @@
-import io from "socket.io-client";
+import * as api from "./api";
 
 export default class App {
     constructor() {
         console.info(`App is started at ${(new Date()).toLocaleString()}`);
 
         this.user = undefined;
-        this.socket = io();
 
-        window.addEventListener("beforeunload", () => {
-            this.socket.emit("user:logout", this.user);
-        });
+        this.addUser = this.addUser.bind(this);
+        this.addUnit = this.addUnit.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
+        this.addMessage = this.addMessage.bind(this);
 
-        const buttonKeys = [
-            "ArrowUp",
-            "ArrowDown",
-            "ArrowLeft",
-            "ArrowRight"
-        ];
+        this.sendNewMessage = api.subscribeToChat(this.addMessage);
+        this.login = api.subscribeToLogin(this.addUser);
+        this.logout = api.subscribeToLogout(this.deleteUser);
 
-        document.addEventListener("keydown", (e) => {
-            if (buttonKeys.indexOf(e.key) === -1) {
-                return;
-            }
-
-            const direction = e.key.substring(5, e.key.length);
-            this.socket.emit("action:move", direction);
-        });
+        window.addEventListener("beforeunload", this.logout);
     }
 
-    login() {
-        let form = document.querySelector("#login form");
-        let input = form.querySelector("input");
-        input.focus();
+    addMessage(data) {
+        const history = document.querySelector(".chat__history");
 
-        form.addEventListener("submit", (e) => {
+        let item = document.createElement("p");
+        item.classList.add(`foreground-color-${data.user.color}`);
+        item.innerHTML = `${data.user.name}: ${data.message}`;
+
+        history.appendChild(item);
+
+        if (history.children.length > 10) {
+            history.firstChild.remove();
+        }
+    }
+
+    addUnit(user) {
+        let unit = document.createElement("div");
+        unit.id = user.id;
+        unit.style.color = "#FFFFFF";
+        unit.classList.add("square", "unit", `background-color-${user.color}`);
+        let unitName = document.createTextNode(user.name.substring(0, 1).toUpperCase());
+        unit.appendChild(unitName);
+        const query = `td[x="${user.position.x}"][y="${user.position.y}"] `;
+        const target = document.querySelector(query);
+        target.firstChild.replaceWith(unit);
+    }
+
+    addUser(user) {
+        const users = document.querySelector(".users");
+
+        let newDiv = document.createElement("p");
+        newDiv.id = user.name;
+        newDiv.classList.add("user", `background-color-${user.color}`);
+        let newContent = document.createTextNode(user.name);
+        newDiv.appendChild(newContent);
+        users.appendChild(newDiv);
+
+        this.addUnit(user);
+    }
+
+    deleteUser(user) {
+        const empty = document.createElement("div");
+        empty.classList.add("square");
+
+        document.querySelector(`p[id="${user.name}"]`).remove();
+        document.querySelector(`div[id="${user.id}"]`).replaceWith(empty);
+    }
+
+    moveUser(user) {
+        const empty = document.createElement("div");
+        empty.classList.add("square");
+
+        document.querySelector(`div[id="${user.id}"]`).replaceWith(empty);
+        this.addUnit(user);
+    }
+
+    run() {
+        let login = document.querySelector("form.login");
+        let loginInput = login.querySelector("input");
+        loginInput.focus();
+
+        login.addEventListener("submit", (e) => {
             e.preventDefault();
             if (this.user === undefined || this.user === null || this.user.length === 0) {
-                this.user = input.value;
-                input.value = "";
-                this.socket.emit("user:login", { name: this.user });
-                document.querySelector(".login").classList.add("hidden");
-                document.querySelector(".game").classList.remove("hidden");
+                this.user = loginInput.value;
+                loginInput.value = "";
+
+                this.login({ name: this.user });
+
+                document.querySelector(".login-page").classList.add("hidden");
+                document.querySelector(".game-page").classList.remove("hidden");
                 document.querySelector("table").focus();
             }
         });
 
-    }
+        const chat = document.querySelector("form.chat");
+        const chatInput = chat.querySelector("input");
 
-    run() {
-        const chat = document.querySelector("#chat");
-        const users = document.querySelector("#users");
-        const chatForm = document.querySelector("#chat");
-        const input = document.querySelector("input");
-
-        const sendNewMessage = (message) => {
-            this.socket.emit("message:send", message);
-        };
-
-        chatForm.addEventListener("submit", (e) => {
+        chat.addEventListener("submit", (e) => {
             e.preventDefault();
-            sendNewMessage(input.value);
-            input.value = "";
+
+            this.sendNewMessage(chatInput.value);
+            chatInput.value = "";
         });
-
-        const addMessage = (data) => {
-            let newDiv = document.createElement("p");
-            newDiv.style.color = data.user.color;
-            let newContent = document.createTextNode(`${data.user.name}: ${data.message}`);
-            newDiv.appendChild(newContent);
-            chat.appendChild(newDiv);
-
-            if (chat.children.length > 10) {
-                chat.firstChild.remove();
-            }
-        };
-
-        const addUserUnit = (user) => {
-            let unit = document.createElement("div");
-            unit.id = user.id;
-            unit.style.color = "#FFFFFF";
-            unit.classList.add("square", "unit", `color-${user.color}`);
-            let unitName = document.createTextNode(user.name.substring(0, 1).toUpperCase());
-            unit.appendChild(unitName);
-            const query = `td[x="${user.position.x}"][y="${user.position.y}"] `;
-            const target = document.querySelector(query);
-            target.firstChild.replaceWith(unit);
-        };
-
-        const addUser = (user) => {
-            console.info(user);
-
-            let newDiv = document.createElement("p");
-            newDiv.id = user.name;
-            newDiv.classList.add("user",`color-${user.color}`);
-            let newContent = document.createTextNode(user.name);
-            newDiv.appendChild(newContent);
-            users.appendChild(newDiv);
-
-            addUserUnit(user);
-        };
-
-        const getEmpty = () => {
-            const empty = document.createElement("div");
-            empty.classList.add("square");
-
-            return empty;
-        };
-
-        const deleteUser = (user) => {
-            document.querySelector(`p[id="${user.name}"]`).remove();
-            document.querySelector(`div[id="${user.id}"]`).replaceWith(getEmpty());
-        };
-
-        const moveUser = (user) => {
-            document.querySelector(`div[id="${user.id}"]`).replaceWith(getEmpty());
-            addUserUnit(user);
-        };
-
-        this.login();
-
-        this.socket.on("user:login", addUser);
-        this.socket.on("user:logout", deleteUser);
-        this.socket.on("message:new", addMessage);
-        this.socket.on("user:move", moveUser);
     }
 }

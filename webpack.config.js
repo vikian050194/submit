@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: "development",
-    entry: ["./client/js/index.js", "bootstrap-loader/extractStyles", "./client/build.js"],
+    entry: ["./client/js/index.js", "./client/build.js"],
     devtool: "inline-source-map",
     module: {
         rules: [
@@ -14,7 +14,7 @@ module.exports = {
                 use: [{
                     loader: "babel-loader",
                     options: {
-                        presets: ["env"]
+                        presets: ["@babel/preset-env"]
                     }
                 },
                 "eslint-loader"]
