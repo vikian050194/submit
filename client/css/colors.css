@@ -33,3 +33,20 @@
 .foreground-color-s {
     color: #d3d3d3;
 }
+
+.background-color-b{
+    border-width: 2px;
+    border-style: solid;
+    border-color: white;
+    animation: blinkingBackground 750ms linear infinite;
+}
+
+@keyframes blinkingBackground {
+    0% {
+        background-color: #f65314;
+    }
+
+    100% {
+        background-color: #d3d3d3;
+    }
+}
