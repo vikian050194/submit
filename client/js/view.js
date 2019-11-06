@@ -21,7 +21,7 @@ export default (externalCallback) => {
             let row = "<tr>";
 
             for (let j = 0; j < x; j++) {
-                row += `<td x=${j} y="${i}"><div class="square wall"></div></td>`;
+                row += `<td class="cell" x=${j} y="${i}"><div class="square wall"></div></td>`;
             }
 
             row += "</tr>";

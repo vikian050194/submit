@@ -1,36 +1,36 @@
-.container{
-    height: 100%;
+body {
+    margin: 0px;
 }
 
-.hidden{
+.hidden {
     display: none !important;
 }
 
-.page{
+.page {
     height: 100vh;
     width: 100vw;
     display: flex;
 }
 
-.login-page{
+.login-page {
     justify-content: center;
     align-items: center;
 }
 
-.login{
+.login {
     display: table-cell;
     vertical-align: middle;
 }
 
-.game-page > div{
-    margin: 10px;
+.game-page {
+    justify-content: space-around;
 }
 
-td{
+.cell {
     border: 1px dotted lightgrey;
 }
 
-.square{
+.square {
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -38,32 +38,44 @@ td{
     text-align: center;
 }
 
-.unit{
-    border-width:  1px;
+.unit {
+    border-width: 1px;
     border-style: solid;
-    border-color:  white;
+    border-color: white;
 }
 
-.wall{
-    border-width:  2px;
+.wall {
+    border-width: 2px;
     border-style: solid;
-    border-color:  grey;
+    border-color: grey;
     background-color: lightgrey;
 }
 
-.let{
-    border-width:  2px;
+.let {
+    border-width: 2px;
     border-style: solid;
-    border-color:  ghostwhite;
+    border-color: ghostwhite;
     background-color: lightgrey;
 }
 
-h1{
+h1 {
     text-align: center;
 }
 
-.user{
+.user {
     color: white;
     text-align: center;
     border-radius: 5px;
+}
+
+.field-container,
+.info-container {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.field {
+    display: table-cell;
+    vertical-align: middle;
 }

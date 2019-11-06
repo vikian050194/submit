@@ -3,8 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, minimal-ui, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Square</title>
     <link href="bundle.css" rel="stylesheet">
     <script type="text/javascript" src="bundle.js"></script>
@@ -15,27 +14,28 @@
     <div id="root">
         <div class="page login-page">
             <form autocomplete="off" class="login">
-                <input placeholder="Type your nickname here..." autocomplete="off" class="login__input" />
+                <input placeholder="Your nickname is..." autocomplete="off" class="login__input" />
                 <button class="login__button">Login</button>
             </form>
         </div>
         <div class="page game-page hidden">
-            <div>
-                <h1>Field</h1>
-                <table></table>
+            <div class="field-container">
+                <table class="field"></table>
             </div>
-            <div>
-                <div class="users">
-                    <h1>Users</h1>
-                    <div class="users__list"></div>
-                </div>
-                <div class="chat">
-                    <h1>Chat</h1>
-                    <div class="chat__history"></div>
-                    <form autocomplete="off" class="chat">
-                        <input placeholder="Type your message here..." name="description" autocomplete="off" />
-                        <button>Send</button>
-                    </form>
+            <div class="info-container">
+                <div class="info">
+                    <div class="users">
+                        <h1>Users</h1>
+                        <div class="users__list"></div>
+                    </div>
+                    <div class="chat">
+                        <h1>Chat</h1>
+                        <div class="chat__history"></div>
+                        <form autocomplete="off" class="chat">
+                            <input placeholder="Your message is..." name="description" autocomplete="off" />
+                            <button>Send</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
