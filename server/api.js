@@ -104,25 +104,27 @@ const Api = (socketServer) => {
             repository.addMessage(data);
         });
 
-        client.on("action:move", function (direction) {
+        client.on("action", function (actions) {
             const { user } = client;
             let { x, y } = user.position;
 
-            switch (direction) {
-                case "Up":
-                    y--;
-                    break;
-                case "Down":
-                    y++;
-                    break;
-                case "Left":
-                    x--;
-                    break;
-                case "Right":
-                    x++;
-                    break;
-                default:
-                    break;
+            for (const action of actions) {
+                switch (action) {
+                    case "up":
+                        y--;
+                        break;
+                    case "down":
+                        y++;
+                        break;
+                    case "left":
+                        x--;
+                        break;
+                    case "right":
+                        x++;
+                        break;
+                    default:
+                        break;
+                }
             }
 
             const isUnitOutsideLeftBorder = x < 0;
@@ -139,8 +141,8 @@ const Api = (socketServer) => {
                 user.position.x = x;
                 user.position.y = y;
 
-                client.emit("user:move", user);
-                client.broadcast.emit("user:move", user);
+                client.emit("action", user);
+                client.broadcast.emit("action", user);
             }
         });
 

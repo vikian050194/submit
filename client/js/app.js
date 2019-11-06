@@ -1,4 +1,5 @@
 import * as api from "./api";
+import ControllerManager from "./controller/manager";
 
 export default class App {
     constructor() {
@@ -10,10 +11,12 @@ export default class App {
         this.addUnit = this.addUnit.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
         this.addMessage = this.addMessage.bind(this);
+        this.moveUser = this.moveUser.bind(this);
 
         this.sendNewMessage = api.subscribeToChat(this.addMessage);
         this.login = api.subscribeToLogin(this.addUser);
         this.logout = api.subscribeToLogout(this.deleteUser);
+        this.action = api.subscribeToActions(this.moveUser);
 
         window.addEventListener("beforeunload", this.logout);
     }
@@ -55,6 +58,8 @@ export default class App {
         users.appendChild(newDiv);
 
         this.addUnit(user);
+
+        new ControllerManager((payload) => { this.action(payload.actions); });
     }
 
     deleteUser(user) {

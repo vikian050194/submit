@@ -31,3 +31,13 @@ export const subscribeToLogout = (callback) => {
 
     return logout;
 };
+
+const action = (payload) => {
+    socket.emit("action", payload);
+};
+
+export const subscribeToActions = (callback) => {
+    socket.on("action", callback);
+
+    return action;
+};
