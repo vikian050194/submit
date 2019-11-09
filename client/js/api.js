@@ -1,43 +1,35 @@
 import io from "socket.io-client";
 
-const socket = io();
+const client = io();
 
-const sendToChat = (payload) => {
-    socket.emit("message", payload);
+export const message = (payload, cb) => {
+    client.emit("message", payload, cb);
 };
 
-export const subscribeToChat = (callback) => {
-    socket.on("message", callback);
-
-    return sendToChat;
+export const subscribeToMessage = (cb) => {
+    client.on("message", cb);
 };
 
-const login = (payload) => {
-    socket.emit("login", payload);
+export const login = (payload, cb) => {
+    client.emit("login", payload, cb);
 };
 
-export const subscribeToLogin = (callback) => {
-    socket.on("login", callback);
-
-    return login;
+export const subscribeToLogin = (cb) => {
+    client.on("login", cb);
 };
 
-const logout = (payload) => {
-    socket.emit("logout", payload);
+export const logout = () => {
+    client.emit("logout");
 };
 
-export const subscribeToLogout = (callback) => {
-    socket.on("logout", callback);
-
-    return logout;
+export const subscribeToLogout = (cb) => {
+    client.on("logout", cb);
 };
 
-const action = (payload) => {
-    socket.emit("action", payload);
+export const action = (payload, cb) => {
+    client.emit("action", payload, cb);
 };
 
-export const subscribeToActions = (callback) => {
-    socket.on("action", callback);
-
-    return action;
+export const subscribeToAction = (cb) => {
+    client.on("action", cb);
 };

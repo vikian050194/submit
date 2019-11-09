@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as api from "./api";
 import ControllerManager from "./controller/manager";
 
@@ -5,20 +6,19 @@ export default class App {
     constructor() {
         console.info(`App is started at ${(new Date()).toLocaleString()}`);
 
-        this.user = undefined;
+        this.user = { name: undefined };
 
-        this.addUser = this.addUser.bind(this);
         this.addUnit = this.addUnit.bind(this);
         this.deleteUser = this.deleteUser.bind(this);
         this.addMessage = this.addMessage.bind(this);
         this.moveUser = this.moveUser.bind(this);
 
-        this.sendNewMessage = api.subscribeToChat(this.addMessage);
-        this.login = api.subscribeToLogin(this.addUser);
-        this.logout = api.subscribeToLogout(this.deleteUser);
-        this.action = api.subscribeToActions(this.moveUser);
+        api.subscribeToMessage(this.addMessage);
+        api.subscribeToLogin(this.addUser.bind(this));
+        api.subscribeToLogout(this.deleteUser);
+        api.subscribeToAction(this.moveUser);
 
-        window.addEventListener("beforeunload", this.logout);
+        window.addEventListener("beforeunload", api.logout);
     }
 
     addMessage(data) {
@@ -59,7 +59,11 @@ export default class App {
 
         this.addUnit(user);
 
-        new ControllerManager((payload) => { this.action(payload.actions); });
+        new ControllerManager((payload) => { api.action(payload.actions, (status, payload) =>{
+            if(status === "OK"){
+                this.moveUser(payload);
+            }
+        }); });
     }
 
     deleteUser(user) {
@@ -83,19 +87,34 @@ export default class App {
         let loginInput = login.querySelector("input");
         loginInput.focus();
 
-        login.addEventListener("submit", (e) => {
+        const onSubmit = (e) => {
             e.preventDefault();
-            if (this.user === undefined || this.user === null || this.user.length === 0) {
-                this.user = loginInput.value;
-                loginInput.value = "";
 
-                this.login({ name: this.user });
+            if (this.user.name) {
+                return;
+            }
+
+            this.user.name = loginInput.value;
+            loginInput.value = "";
+
+            const onLogin = (status, payload) => {
+                if (status === "Error") {
+                    alert(payload);
+                    return;
+                }
+
+                this.user = payload;
+                this.addUser(this.user);
 
                 document.querySelector(".login-page").classList.add("hidden");
                 document.querySelector(".game-page").classList.remove("hidden");
                 document.querySelector("table").focus();
-            }
-        });
+            };
+
+            api.login(this.user, onLogin);
+        };
+
+        login.addEventListener("submit", onSubmit);
 
         const chat = document.querySelector("form.chat");
         const chatInput = chat.querySelector("input");
@@ -103,7 +122,17 @@ export default class App {
         chat.addEventListener("submit", (e) => {
             e.preventDefault();
 
-            this.sendNewMessage(chatInput.value);
+            const onMessage = (status, payload) => {
+                if (status === "Error") {
+                    alert(payload);
+                    return;
+                }
+
+                this.addMessage(payload);
+            };
+
+            api.message(chatInput.value, onMessage);
+
             chatInput.value = "";
         });
     }

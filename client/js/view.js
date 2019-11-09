@@ -12,15 +12,15 @@ export default (externalCallback) => {
     }
 
     httpGetAsync("/config", (body) => {
-        const { x, y } = JSON.parse(body).size;
+        const { size } = JSON.parse(body);
 
         const table = document.querySelector("table");
         let content = "";
 
-        for (let i = 0; i < y; i++) {
+        for (let i = 0; i < size; i++) {
             let row = "<tr>";
 
-            for (let j = 0; j < x; j++) {
+            for (let j = 0; j < size; j++) {
                 row += `<td class="cell" x=${j} y="${i}"><div class="square wall"></div></td>`;
             }
 
