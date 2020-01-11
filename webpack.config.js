@@ -1,23 +1,24 @@
 const path = require("path");
-const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: "development",
-    entry: ["./client/js/index.js", "./client/build.js"],
+    entry: ["@babel/polyfill", "./client/js/index.jsx", "./client/build.js"],
     devtool: "inline-source-map",
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 exclude: /(node_modules)/,
-                use: [{
+                use: {
                     loader: "babel-loader",
                     options: {
-                        presets: ["@babel/preset-env"]
+                        presets: ["@babel/preset-env", "@babel/preset-react"]
                     }
                 },
-                "eslint-loader"]
+                resolve: {
+                    extensions: [".js", ".jsx"]
+                }
             },
             {
                 test: /\.css$/,
@@ -27,18 +28,8 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(woff|woff2|ttf|eot)$/,
+                test: /\.(jpg|jpeg|gif|png|ico)$/,
                 loader: "url-loader",
-                options: {
-                    limit: 1024,
-                    name: "[name].[ext]",
-                    outputPath: "fonts/",
-                    publicPath: "fonts/"
-                }
-            },
-            {
-                test: /\.png$/,
-                loader: "file-loader",
                 options: {
                     limit: 1024,
                     name: "[name].[ext]"
@@ -56,13 +47,10 @@ module.exports = {
     },
     output: {
         filename: "bundle.js",
-        path: path.resolve(__dirname, "client", "build")
+        path: path.resolve(__dirname, "client", "build"),
+        publicPath: "/"
     },
     plugins: [
-        new webpack.ProvidePlugin({
-            "$": "jquery",
-            "jQuery": "jquery"
-        }),
         new MiniCssExtractPlugin({
             filename: "bundle.css"
         })

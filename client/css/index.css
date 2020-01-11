@@ -2,70 +2,19 @@ body {
     margin: 0px;
 }
 
-.hidden {
-    display: none !important;
-}
-
 .page {
     height: 100vh;
     width: 100vw;
     display: flex;
-}
-
-.login-page {
-    justify-content: center;
-    align-items: center;
-}
-
-.login {
-    display: table-cell;
-    vertical-align: middle;
+    flex-direction: column;
 }
 
 .game-page {
     justify-content: space-around;
 }
 
-.cell {
-    border: 1px dotted lightgrey;
-}
-
-.square {
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.unit {
-    border-width: 2px;
-    border-style: solid;
-    border-color: white;
-}
-
-.wall {
-    border-width: 2px;
-    border-style: solid;
-    border-color: grey;
-    background-color: lightgrey;
-}
-
-.let {
-    border-width: 2px;
-    border-style: solid;
-    border-color: ghostwhite;
-    background-color: lightgrey;
-}
-
 h1 {
     text-align: center;
-}
-
-.user {
-    color: white;
-    text-align: center;
-    border-radius: 5px;
 }
 
 .field-container,

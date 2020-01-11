@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const port = process.env.PORT || 8080;
 
 const express = require("express");
@@ -7,34 +6,35 @@ const expressApplication = express();
 const httpServer = require("http").createServer(expressApplication);
 const socketServer = require("socket.io")(httpServer);
 
-const ClientManager = require("./ClientManager");
+const UserManager = require("./UserManager");
 const RoomManager = require("./RoomManager");
 const makeHandlers = require("./handlers");
 
-const clientManager = new ClientManager();
+const userManager = new UserManager();
 const roomManager = new RoomManager();
 
 socketServer.on("connection", (client) => {
     const {
-        handleLogin,
-        handleLogout,
-        handleMessage,
-        handleAction
-    } = makeHandlers(client, clientManager, roomManager);
+        handleSignUp,
+        handleSignIn,
+        handleSignOut
+        // handleMessage,
+        // handleAction
+    } = makeHandlers(client, userManager, roomManager);
 
     console.info(`New client is connected: ${client.id}`);
-    clientManager.addClient(client);
 
-    client.on("login", handleLogin);
-    client.on("logout", handleLogout);
-    client.on("message", handleMessage);
-    client.on("action", handleAction);
+    client.on("SIGNUP", handleSignUp);
+    client.on("SIGNIN", handleSignIn);
+    client.on("SIGNOUT", handleSignOut);
+    // client.on("MESSAGE", handleMessage);
+    // client.on("ACTION", handleAction);
 
-    client.on("disconnect", function () {
+    client.on("disconnect", () => {
         console.info(`Client is disconnected: ${client.id}`);
     });
 
-    client.on("error", function (err) {
+    client.on("error", (err) => {
         console.info(`Received error from client: ${client.id}`);
         console.info(err);
     });
@@ -45,9 +45,9 @@ expressApplication.use(bodyParser.urlencoded({ extended: true }));
 
 expressApplication.use(express.static("client/build"));
 
-var router = require("./router");
+const router = require("./router")(userManager, roomManager);
 expressApplication.use("/", router);
 
-httpServer.listen(port, function () {
-    console.info("Listening on port " + port);
+httpServer.listen(port, () => {
+    console.info(`Server is listening on port ${port}`);
 });

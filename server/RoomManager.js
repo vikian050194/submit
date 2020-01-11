@@ -1,19 +1,36 @@
 const Room = require("./Room");
+
 module.exports = class RoomManager {
     constructor(){
         this.rooms = new Map();
-        this.rooms.set("Default", new Room());
+
+        const defaultRoom = new Room(1, "Default");
+        this.rooms.set(defaultRoom.id, defaultRoom);
     }
     
-    removeClient(client) {
-        this.rooms.forEach(c => c.removeUser(client));
+    addRoom(){
+        this.rooms.set(name, new Room());
     }
 
-    getChatroomByName(chatroomName) {
-        return this.rooms.get(chatroomName);
+    deleteRoom(id){
+        this.rooms.delete(id);
     }
 
-    serializeChatrooms() {
-        return Array.from(this.chatrooms.values()).map(c => c.serialize());
+    joinRoom(id){
+        this.rooms[id].join();
+    }
+
+    leaveRoom(id){
+        this.rooms[id].leave();
+    }
+
+    getRoom(id) {
+        const room = this.rooms.get(id);
+
+        return room ? room.serialize() : null;
+    }
+
+    getRooms() {
+        return Array.from(this.rooms.values()).map(c => c.serialize());
     }
 };

@@ -1,129 +1,101 @@
 /* eslint-disable no-unused-vars */
-const randomInt = require("random-int");
-const nanoid = require("nanoid");
-
-const Repository = require("./repository");
-const repository = new Repository();
-const config = require("./config.json");
-
-const systemUser = {
-    name: "SYSTEM",
-    color: "s"
-};
-
-const getPosition = () => {
-    return {
-        x: randomInt(0, config.size - 1),
-        y: randomInt(0, config.size - 1)
+module.exports = (client, userManager, roomManager) => {
+    const handleSignUp = (user, cb) => {
+        userManager.signUp(user);
+        handleSignIn(user, cb);
     };
-};
 
-const getColor = () => {
-    let index = null;
+    const handleSignIn = (user, cb) => {
+        const result = userManager.signIn(user, client);
+        cb && result instanceof Error ? cb("Error", result) : cb("OK", result);
+    };
 
-    const users = repository.getUsers();
+    const handleSignOut = (_, cb) => {
+        const isSuccess = userManager.signOut(client.id);
+        cb && isSuccess ? cb("OK") : cb("Error");
+    };
 
-    do {
-        index = randomInt(0, config.colors - 1);
-    } while ((users.filter((u) => u.color === index).length !== 0));
+    const handleJoin = ({ roomId, userId }, cb) => {
+        roomManager.join(roomId, userId);
+        // client.emit("action", repository.arena);
+        cb && cb("OK", null);
+    };
 
-    return index;
-};
+    const handleLeave = (_, cb) => {
+        // const user = clientManager.getUserByClientId(client.id);
+        // repository.removeUser(user);
 
-module.exports = (client, clientManager, roomManager) => {
-    function handleLogin(user, cb) {
-        clientManager.registerClient(client, user);
+        // clientManager.removeClient(client);
 
-        user.position = getPosition();
-        user.color = getColor();
-        user.id = nanoid();
+        // client.broadcast.emit("logout", user);
 
-        client.broadcast.emit("login", user);
+        // cb && cb("OK");
+    };
 
-        repository.getUsers().forEach(u => {
-            client.emit("login", u);
-        });
+    const handleMessage = ({ message }, cb) => {
+        // const user = clientManager.getUserByClientId(client.id);
 
-        repository.getMessages().forEach(m => {
-            client.emit("message", m);
-        });
+        // roomManager.handleMessage();
 
-        repository.addUser(user);
+        // var data = {
+        //     user,
+        //     message,
+        //     date: new Date()
+        // };
 
-        cb("OK", user);
-    }
+        // repository.addMessage(data);
 
-    function handleLogout(_, cb) {
-        const user = clientManager.getUserByClientId(client.id);
-        repository.removeUser(user);
+        // client.broadcast.emit("message", data);
 
-        clientManager.removeClient(client);
+        // cb && cb("OK", data);
+    };
 
-        client.broadcast.emit("logout", user);
+    const handleAction = (actions, cb) => {
+        // const user = clientManager.getUserByClientId(client.id);
+        // let { x, y } = user.position;
 
-        cb && cb("OK");
-    }
+        // for (const action of actions) {
+        //     switch (action) {
+        //         case "up":
+        //             y--;
+        //             break;
+        //         case "down":
+        //             y++;
+        //             break;
+        //         case "left":
+        //             x--;
+        //             break;
+        //         case "right":
+        //             x++;
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        // }
 
-    function handleMessage(message, cb) {
-        const user = clientManager.getUserByClientId(client.id);
+        // const isUnitOutsideLeftBorder = x < 0;
+        // const isUnitOutsideRightBorder = x >= config.size;
+        // const isUnitOutsideTopBorder = y < 0;
+        // const isUnitOutsideBottomBorder = y >= config.size;
+        // const isUnitIntersectSomething = repository.getUsers().filter(({ position }) => position.x === x && position.y === y).length !== 0;
 
-        var data = {
-            user,
-            message
-        };
+        // if (!isUnitOutsideLeftBorder &&
+        //     !isUnitOutsideRightBorder &&
+        //     !isUnitOutsideTopBorder &&
+        //     !isUnitOutsideBottomBorder &&
+        //     !isUnitIntersectSomething) {
+        //     user.position.x = x;
+        //     user.position.y = y;
 
-        repository.addMessage(data);
-
-        client.broadcast.emit("message", data);
-
-        cb("OK", data);
-    }
-
-    function handleAction(actions, cb) {
-        const user = clientManager.getUserByClientId(client.id);
-        let { x, y } = user.position;
-
-        for (const action of actions) {
-            switch (action) {
-                case "up":
-                    y--;
-                    break;
-                case "down":
-                    y++;
-                    break;
-                case "left":
-                    x--;
-                    break;
-                case "right":
-                    x++;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        const isUnitOutsideLeftBorder = x < 0;
-        const isUnitOutsideRightBorder = x >= config.size;
-        const isUnitOutsideTopBorder = y < 0;
-        const isUnitOutsideBottomBorder = y >= config.size;
-        const isUnitIntersectSomething = repository.getUsers().filter(({ position }) => position.x === x && position.y === y).length !== 0;
-
-        if (!isUnitOutsideLeftBorder &&
-            !isUnitOutsideRightBorder &&
-            !isUnitOutsideTopBorder &&
-            !isUnitOutsideBottomBorder &&
-            !isUnitIntersectSomething) {
-            user.position.x = x;
-            user.position.y = y;
-
-            cb("OK", user);
-            client.broadcast.emit("action", user);
-        }
-    }
+        //     cb("OK", user);
+        //     client.broadcast.emit("action", user);
+        // }
+    };
 
     return {
-        handleLogin,
-        handleLogout,
+        handleSignUp,
+        handleSignIn,
+        handleSignOut,
         handleMessage,
         handleAction
     };

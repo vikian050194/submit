@@ -1,0 +1,14 @@
+.signin-page,
+.signup-page,
+.menu-page {
+    justify-content: center;
+    align-items: center;
+}
+
+.signin,
+.signup,
+.menu {
+    display: grid;
+    vertical-align: middle;
+    width: 200px;
+}

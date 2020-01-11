@@ -1,0 +1,13 @@
+{
+    "browsers": "chrome",
+    "src": "tests/e2e/**/*.test.js",
+    "skipJsErrors": false,
+    "skipUncaughtErrors": false,
+    "appInitDelay": 3000,
+    "concurrency": 1,
+    "selectorTimeout": 3000,
+    "assertionTimeout": 1000,
+    "pageLoadTimeout": 3000,
+    "speed": 1,
+    "stopOnFirstFail": true
+}

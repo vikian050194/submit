@@ -1,3 +1,4 @@
+const path = require("path");
 const merge = require("webpack-merge");
 const common = require("./webpack.config.js");
 const webpack = require("webpack");
@@ -15,5 +16,8 @@ module.exports = merge(common, {
             NODE_ENV: "production",
             DEBUG: false
         })
-    ]
+    ],
+    output: {
+        path: path.resolve(__dirname, "release")
+    }
 });
