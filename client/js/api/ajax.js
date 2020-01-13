@@ -1,4 +1,8 @@
-const makeRequest = async (method = "GET", url = "", data = {}) => {
+const makeRequest = async (method = "GET", url, data) => {
+    if (!url) {
+        throw new Error("url could not be empty");
+    }
+
     const response = await fetch(`/api/${url}`, {
         method,
         mode: "cors",
@@ -9,7 +13,7 @@ const makeRequest = async (method = "GET", url = "", data = {}) => {
         },
         redirect: "follow",
         referrerPolicy: "no-referrer",
-        body: JSON.stringify(data)
+        body: data ? JSON.stringify(data) : null
     });
 
     if (response.status === 200) {

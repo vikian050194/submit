@@ -2,16 +2,16 @@ import actionCreator from "../../actions/actionCreator";
 import * as types from "../../actions/actionTypes";
 import { push } from "connected-react-router";
 import { takeEvery, put, call } from "redux-saga/effects";
-import { signIn } from "../../../api";
+import { getRooms } from "../../../api";
 
-const onSuccess = (user) => actionCreator(types.SIGNIN_FINISH)(user);
+const onSuccess = (user) => actionCreator(types.ROOMS_GET_FINISH)(user);
 const onFail = (error) => actionCreator(types.NOTIFICATION_ERROR)(error);
 
-function* doSignIn({ value: credentials }) {
+function* doGetRooms() {
     try {
-        const response = yield call(signIn, credentials);
+        const response = yield call(getRooms);
         yield put(onSuccess(response));
-        yield put(push("/menu"));
+        yield put(push("/rooms"));
     }
     catch (error) {
         yield put(onFail(error.message));
@@ -19,5 +19,5 @@ function* doSignIn({ value: credentials }) {
 }
 
 export function* getRoomsSaga() {
-    yield takeEvery(types.ROOMS_GET, doSignIn);
+    yield takeEvery(types.ROOMS_GET_START, doGetRooms);
 }

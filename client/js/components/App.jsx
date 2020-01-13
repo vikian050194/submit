@@ -4,6 +4,8 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import configureStore, { history } from "./../redux/configureStore";
 
+import { throttle } from "lodash";
+
 import SignIn from "./menu/SignIn.jsx";
 import SignUp from "./menu/SignUp.jsx";
 import Menu from "./menu/Menu.jsx";
@@ -12,8 +14,15 @@ import Settings from "./menu/Settings.jsx";
 import Game from "./game/Game.jsx";
 import PageNotFound from "./404/PageNotFound";
 
+import { saveState, loadState } from "./localStorage";
+
 const App = () => {
-    const store = configureStore();
+    const persistedState = loadState();
+    const store = configureStore(persistedState);
+
+    store.subscribe(throttle(() => {
+        saveState(store.getState());
+    }, 1000));
 
     console.info(`App is started at ${(new Date()).toLocaleString()}`);
 

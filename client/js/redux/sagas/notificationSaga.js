@@ -7,8 +7,8 @@ export function* notificationSaga() {
         // console.info(value);
     });
 
-    yield takeEvery(types.NOTIFICATION_ERROR, ({value}) => {
-        alert(value);
+    yield takeEvery(types.NOTIFICATION_ERROR, () => {
+        alert("Something went wrong.", "Please retry or reload the page.");
         // console.error(value);
     });
 }

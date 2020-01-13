@@ -1,13 +1,15 @@
 .signin-page,
 .signup-page,
-.menu-page {
+.menu-page,
+.rooms-page {
     justify-content: center;
     align-items: center;
 }
 
 .signin,
 .signup,
-.menu {
+.menu,
+.rooms {
     display: grid;
     vertical-align: middle;
     width: 200px;

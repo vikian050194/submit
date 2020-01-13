@@ -1,19 +1,19 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 
-import error from "./errorReducer";
 import user from "./authenticationReducer";
 import users from "./usersReducer";
-import chat from "./chatReducer";
+import messages from "./messagesReducer";
 import arena from "./arenaReducer";
+import rooms from "./roomsReducer";
 
 const createRootReducer  = (history) => combineReducers({
     router: connectRouter(history),
     user,
     users,
-    messages: chat,
-    arena,
-    errors: error
+    rooms,
+    messages,
+    arena
 });
 
 export default createRootReducer;

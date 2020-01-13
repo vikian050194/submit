@@ -6,6 +6,7 @@ import actionCreator from "../../redux/actions/actionCreator";
 import * as types from "../../redux/actions/actionTypes";
 
 const onSignOut = () => actionCreator(types.SIGNOUT_START)();
+const onGetRooms = () => actionCreator(types.ROOMS_GET_START)();
 
 import "./Menu.css";
 
@@ -39,7 +40,7 @@ const mapActionsToProps = (dispatch) => {
     return {
         signOut: () => dispatch(onSignOut()),
         gotoSettings: () => dispatch(push("/settings")),
-        gotoRooms: () => dispatch(push("/rooms"))
+        gotoRooms: () => dispatch(onGetRooms())
     };
 };
 

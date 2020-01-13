@@ -5,22 +5,21 @@ import { goBack } from "connected-react-router";
 import actionCreator from "../../redux/actions/actionCreator";
 import * as types from "../../redux/actions/actionTypes";
 
-const onJoin = () => actionCreator(types.JOIN_START)();
+const onJoin = (e) => actionCreator(types.ROOMS_JOIN_START)(e.target.key);
 
 import "./Menu.css";
 
-const Rooms = ({ match, rooms, goBack }) => {
-    const { id } = match.props;
+const Rooms = ({ rooms, goBack }) => {
 
     return (
         <div className="page rooms-page">
             <div className="rooms" >
-                <div>
-                    id: {id}
-                </div>
-                <div>
-                    rooms count: {rooms.length}
-                </div>
+                <button className="rooms__button" disabled>
+                    New
+                </button>
+                {
+                    rooms.map(({ id, name }) => <button className="rooms__button" key={id} onClick={onJoin}>{`"${name}"`} room</button>)
+                }
                 <button className="rooms__button" onClick={goBack}>
                     Back
                 </button>
@@ -31,7 +30,6 @@ const Rooms = ({ match, rooms, goBack }) => {
 
 Rooms.propTypes = {
     rooms: PropTypes.array.isRequired,
-    match: PropTypes.object.isRequired,
     joinRoom: PropTypes.func.isRequired,
     goBack: PropTypes.func.isRequired
 };
