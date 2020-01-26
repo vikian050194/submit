@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import actionCreator from "../redux/actions/actionCreator";
+import createAction from "../redux/actions/createAction";
 import * as types from "../redux/actions/actionTypes";
 
-const onShow = (type) => actionCreator(types.ERROR_DELETE)(type);
+const onShow = (type) => createAction(types.ERROR_DELETE)(type);
 
 const ErrorHandler = ({ errors }) => {
     const count = errors.length;

@@ -2,15 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { goBack } from "connected-react-router";
-import actionCreator from "../../redux/actions/actionCreator";
-import * as types from "../../redux/actions/actionTypes";
+import {
+    createAction,
+    ROOM_JOIN_START
+} from "../../redux/actions";
 
-const onJoin = (e) => actionCreator(types.ROOMS_JOIN_START)(e.target.key);
+const onJoin = (id) => createAction(ROOM_JOIN_START)(id);
 
 import "./Menu.css";
 
-const Rooms = ({ rooms, goBack }) => {
-
+const Rooms = ({ rooms, joinRoom, goBack }) => {
     return (
         <div className="page rooms-page">
             <div className="rooms" >
@@ -18,7 +19,7 @@ const Rooms = ({ rooms, goBack }) => {
                     New
                 </button>
                 {
-                    rooms.map(({ id, name }) => <button className="rooms__button" key={id} onClick={onJoin}>{`"${name}"`} room</button>)
+                    rooms.map(({ id, name }) => <button className="rooms__button" key={id} onClick={() => joinRoom(id)}>{`"${name}"`} room</button>)
                 }
                 <button className="rooms__button" onClick={goBack}>
                     Back

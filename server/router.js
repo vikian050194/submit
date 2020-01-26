@@ -12,6 +12,7 @@ const makeRouter = (userManager, roomManager) => {
             if (result instanceof Error) {
                 res.sendStatus(401);
             } else {
+                res.cookie("userId", result.id, { httpOnly: true });
                 res.send(result);
             }
         });
@@ -24,6 +25,7 @@ const makeRouter = (userManager, roomManager) => {
             if (result instanceof Error) {
                 res.sendStatus(401);
             } else {
+                res.cookie("userId", result.id, { httpOnly: true });
                 res.send(result);
             }
         });
@@ -31,11 +33,12 @@ const makeRouter = (userManager, roomManager) => {
     router.route("/api/signout")
         .post((req, res) => {
             const { id } = req.body;
-            const result = userManager.signOut({ id});
+            const result = userManager.signOut({ id });
 
             if (result instanceof Error) {
                 res.sendStatus(400);
             } else {
+                res.clearCookie("userId");
                 res.sendStatus(204);
             }
         });
@@ -52,6 +55,15 @@ const makeRouter = (userManager, roomManager) => {
             const room = roomManager.getRoom(roomId);
 
             room ? res.send(room) : res.sendStatus(404);
+        });
+
+    router.route("/api/rooms/:roomId/join")
+        .post((req, res) => {
+            const { roomId } = req.params;
+            const userId = req.cookies["userId"];
+            const isSuccess = roomManager.joinRoom(roomId, userId);
+
+            isSuccess ? res.sendStatus(204) : res.sendStatus(404);
         });
 
     router.route("/*")

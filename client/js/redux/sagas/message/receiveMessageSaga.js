@@ -1,10 +1,10 @@
-import actionCreator from "../../actions/actionCreator";
+import createAction from "../../actions/createAction";
 import * as types from "../../actions/actionTypes";
 import { eventChannel } from "redux-saga";
 import { take, put, call } from "redux-saga/effects";
 
-const onReceive = (message) => actionCreator(types.MESSAGE_RECEIVE)(message);
-const onFail = (error) => actionCreator(types.NOTIFICATION_ERROR)(error);
+const onReceive = (message) => createAction(types.MESSAGE_RECEIVE)(message);
+const onFail = (error) => createAction(types.NOTIFICATION_ERROR)(error);
 
 const waitNewMessages = (api) => {
     return eventChannel(emitter => {

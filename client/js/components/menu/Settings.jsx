@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { push, goBack } from "connected-react-router";
-import actionCreator from "../../redux/actions/actionCreator";
-import * as types from "../../redux/actions/actionTypes";
+import { goBack } from "connected-react-router";
+// import {
+//     createAction,
+//     JOIN_START
+// } from "../../redux/actions";
 
-const onJoin = () => actionCreator(types.JOIN_START)();
+// const onJoin = () => createAction(JOIN_START)();
 
 import "./Menu.css";
 

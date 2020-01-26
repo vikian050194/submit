@@ -1,11 +1,15 @@
-import actionCreator from "../../actions/actionCreator";
-import * as types from "../../actions/actionTypes";
+import {
+    createAction,
+    SIGNUP_START,
+    SIGNUP_FINISH,
+    NOTIFICATION_ERROR
+} from "../../actions";
 import { push } from "connected-react-router";
 import { takeEvery, put, call } from "redux-saga/effects";
 import { signUp } from "./../../../api";
 
-const onSuccess = (user) => actionCreator(types.SIGNUP_FINISH)(user);
-const onFail = (error) => actionCreator(types.NOTIFICATION_ERROR)(error);
+const onSuccess = (user) => createAction(SIGNUP_FINISH)(user);
+const onFail = (error) => createAction(NOTIFICATION_ERROR)(error);
 
 function* doSignUp({ value: credentials }) {
     try {
@@ -19,5 +23,5 @@ function* doSignUp({ value: credentials }) {
 }
 
 export function* signUpSaga() {
-    yield takeEvery(types.SIGNUP_START, doSignUp);
+    yield takeEvery(SIGNUP_START, doSignUp);
 }

@@ -2,11 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import actionCreator from "../../redux/actions/actionCreator";
-import * as types from "../../redux/actions/actionTypes";
+import {
+    createAction,
+    SIGNOUT_START,
+    ROOMS_GET_START
+} from "../../redux/actions";
 
-const onSignOut = () => actionCreator(types.SIGNOUT_START)();
-const onGetRooms = () => actionCreator(types.ROOMS_GET_START)();
+const onSignOut = () => createAction(SIGNOUT_START)();
+const onGetRooms = () => createAction(ROOMS_GET_START)();
 
 import "./Menu.css";
 

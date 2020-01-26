@@ -1,10 +1,10 @@
-import actionCreator from "../../actions/actionCreator";
+import createAction from "../../actions/createAction";
 import * as types from "../../actions/actionTypes";
 import { eventChannel } from "redux-saga";
 import { take, put, call } from "redux-saga/effects";
 
-const onReceive = (arena) => actionCreator(types.ACTION_RECEIVE)(arena);
-const onFail = (error) => actionCreator(types.NOTIFICATION_ERROR)(error);
+const onReceive = (arena) => createAction(types.ACTION_RECEIVE)(arena);
+const onFail = (error) => createAction(types.NOTIFICATION_ERROR)(error);
 
 const waitNewAction = (api) => {
     return eventChannel(emitter => {

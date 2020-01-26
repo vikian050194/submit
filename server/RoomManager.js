@@ -2,10 +2,10 @@ const Room = require("./Room");
 
 module.exports = class RoomManager {
     constructor(){
-        this.rooms = new Map();
+        this.rooms = {};
 
-        const defaultRoom = new Room(1, "Default");
-        this.rooms.set(defaultRoom.id, defaultRoom);
+        const defaultRoom = new Room("rgh89", "Default");
+        this.rooms[defaultRoom.id] = defaultRoom;
     }
     
     addRoom(){
@@ -16,8 +16,8 @@ module.exports = class RoomManager {
         this.rooms.delete(id);
     }
 
-    joinRoom(id){
-        this.rooms[id].join();
+    joinRoom(roomId, userId){
+        return this.rooms[roomId].join(userId);
     }
 
     leaveRoom(id){
@@ -25,7 +25,7 @@ module.exports = class RoomManager {
     }
 
     getRoom(id) {
-        const room = this.rooms.get(id);
+        const room = this.rooms[id];
 
         return room ? room.serialize() : null;
     }

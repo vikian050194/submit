@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import actionCreator from "../../redux/actions/actionCreator";
-import * as types from "../../redux/actions/actionTypes";
+import {
+    createAction,
+    SIGNIN_START
+} from "../../redux/actions";
 
-const onSignIn = (credentials) => actionCreator(types.SIGNIN_START)(credentials);
+const onSignIn = (credentials) => createAction(SIGNIN_START)(credentials);
 
 import "./Menu.css";
 

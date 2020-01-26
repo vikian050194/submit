@@ -2,6 +2,7 @@ const port = process.env.PORT || 8080;
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const expressApplication = express();
 const httpServer = require("http").createServer(expressApplication);
 const socketServer = require("socket.io")(httpServer);
@@ -42,6 +43,8 @@ socketServer.on("connection", (client) => {
 
 expressApplication.use(bodyParser.json());
 expressApplication.use(bodyParser.urlencoded({ extended: true }));
+
+expressApplication.use(cookieParser());
 
 expressApplication.use(express.static("client/build"));
 

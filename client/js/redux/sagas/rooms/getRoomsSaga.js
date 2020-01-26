@@ -1,11 +1,15 @@
-import actionCreator from "../../actions/actionCreator";
-import * as types from "../../actions/actionTypes";
+import {
+    createAction,
+    ROOMS_GET_START,
+    ROOMS_GET_FINISH,
+    NOTIFICATION_ERROR
+} from "../../actions";
 import { push } from "connected-react-router";
 import { takeEvery, put, call } from "redux-saga/effects";
 import { getRooms } from "../../../api";
 
-const onSuccess = (user) => actionCreator(types.ROOMS_GET_FINISH)(user);
-const onFail = (error) => actionCreator(types.NOTIFICATION_ERROR)(error);
+const onSuccess = (user) => createAction(ROOMS_GET_FINISH)(user);
+const onFail = (error) => createAction(NOTIFICATION_ERROR)(error);
 
 function* doGetRooms() {
     try {
@@ -19,5 +23,5 @@ function* doGetRooms() {
 }
 
 export function* getRoomsSaga() {
-    yield takeEvery(types.ROOMS_GET_START, doGetRooms);
+    yield takeEvery(ROOMS_GET_START, doGetRooms);
 }

@@ -1,5 +1,4 @@
-const generate = require("nanoid/generate");
-const dictionary = require("nanoid-dictionary");
+const IdGenerator = require("./utils/idGenerator");
 
 class User {
     constructor(name, login, password) {
@@ -7,6 +6,8 @@ class User {
         this.login = login;
         this.password = password;
         this.online = true;
+
+        this.generator = new IdGenerator();
     }
 }
 
@@ -15,14 +16,14 @@ module.exports = class UserManager {
         this.users = new Map();
 
         //TODO Remove test user
-        const id = "ab12";
+        const id = "uab12";
         const user = new User("user", "user", "user");
         this.users.set(id, user);
     }
 
     signUp({ name, login, password }) {
         for (const iterator of this.users) {
-            const [id, user] = iterator;
+            const [, user] = iterator;
             const isLoginInUse = user.login === login;
 
             if (isLoginInUse) {
@@ -30,7 +31,7 @@ module.exports = class UserManager {
             }
         }
 
-        const id = generate(dictionary.lowercase, 2) + generate(dictionary.numbers, 2);
+        const id = this.generator.generateUserId();
         this.users.set(id, new User(name, login, password));
 
         return { id, name };

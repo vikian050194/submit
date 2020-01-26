@@ -8,7 +8,7 @@ module.exports = merge(common, {
     mode: "production",
     optimization: {
         minimizer: [new TerserPlugin({
-            sourceMap: true
+            sourceMap: false
         })]
     },
     plugins: [

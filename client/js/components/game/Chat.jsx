@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import actionCreator from "../../redux/actions/actionCreator";
-import * as types from "../../redux/actions/actionTypes";
+import {
+    createAction,
+    MESSAGE_SEND
+} from "../../redux/actions";
 
-const sendMessage = (message) => actionCreator(types.MESSAGE_SEND)(message);
+const sendMessage = (message) => createAction(MESSAGE_SEND)(message);
 
 const Chat = ({ messages, sendMessage }) => {
     const [message, setMessage] = useState("");

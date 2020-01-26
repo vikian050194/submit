@@ -1,27 +1,27 @@
 import {
     createAction,
-    SIGNOUT_START,
-    SIGNOUT_FINISH,
+    ROOM_JOIN_START,
+    ROOM_JOIN_FINISH,
     NOTIFICATION_ERROR
 } from "../../actions";
 import { push } from "connected-react-router";
 import { takeEvery, put, call } from "redux-saga/effects";
-import { signOut } from "./../../../api";
+import { joinRoom } from "../../../api";
 
-const onSuccess = () => createAction(SIGNOUT_FINISH)();
+const onSuccess = (user) => createAction(ROOM_JOIN_FINISH)(user);
 const onFail = (error) => createAction(NOTIFICATION_ERROR)(error);
 
-function* doSignOut({ value: id }) {
+function* doJoinRoom({ value: roomId }) {
     try {
-        const response = yield call(signOut, { id });
+        const response = yield call(joinRoom, roomId);
         yield put(onSuccess(response));
-        yield put(push("/"));
+        yield put(push(`/rooms/${roomId}`));
     }
     catch (error) {
         yield put(onFail(error.message));
     }
 }
 
-export function* signOutSaga() {
-    yield takeEvery(SIGNOUT_START, doSignOut);
+export function* joinRoomSaga() {
+    yield takeEvery(ROOM_JOIN_START, doJoinRoom);
 }

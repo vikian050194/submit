@@ -5,10 +5,20 @@ module.exports = class Room {
     constructor(id, name) {
         this.id = id;
         this.name= name;
+        this.users = [];
         // this.chat = new Chat();
         // this.arena = new Arena();
         // this.members = new Map();
         this.size = 4;
+    }
+
+    join(userId){
+        if(this.users.indexOf(userId) !== -1){
+            return false;
+        }
+
+        this.users.push(userId);
+        return true;
     }
 
     // broadcastMessage(message) {

@@ -1,14 +1,17 @@
-import * as types from "../actions/actionTypes";
+// import {
+//     USER_LOGIN,
+//     USER_LOGOUT
+// } from "../actions";
 
-const defaultState = [];
+// const defaultState = [];
 
-export default function Reducer(state = defaultState, action) {
-    switch (action.type) {
-        case types.USER_LOGIN:
-            return [...state, action.value];
-        case types.USER_LOGOUT:
-            return state.filter(u => u.id !== action.value.id);
-        default:
-            return state;
-    }
-}
+// export default function Reducer(state = defaultState, action) {
+//     switch (action.type) {
+//         case USER_LOGIN:
+//             return [...state, action.value];
+//         case USER_LOGOUT:
+//             return state.filter(u => u.id !== action.value.id);
+//         default:
+//             return state;
+//     }
+// }

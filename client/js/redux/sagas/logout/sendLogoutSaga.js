@@ -1,10 +1,10 @@
-import actionCreator from "../../actions/actionCreator";
+import createAction from "../../actions/createAction";
 import * as types from "../../actions/actionTypes";
 import { push } from "connected-react-router";
 import { take, put, call } from "redux-saga/effects";
 
-const onSuccess = (user) => actionCreator(types.LOGOUT_FINISH)(user);
-const onFail = (error) => actionCreator(types.LOGOUT_FAIL)(error);
+const onSuccess = (user) => createAction(types.LOGOUT_FINISH)(user);
+const onFail = (error) => createAction(types.LOGOUT_FAIL)(error);
 
 const doLogout = (api, name) => {
     return new Promise((resolve, reject) => {

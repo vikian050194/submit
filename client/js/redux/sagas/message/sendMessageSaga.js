@@ -1,9 +1,9 @@
-import actionCreator from "../../actions/actionCreator";
+import createAction from "../../actions/createAction";
 import * as types from "../../actions/actionTypes";
 import { take, put, call } from "redux-saga/effects";
 
-const onSuccess = (message) => actionCreator(types.MESSAGE_RECEIVE)(message);
-const onFail = (error) => actionCreator(types.NOTIFICATION_ERROR)(error);
+const onSuccess = (message) => createAction(types.MESSAGE_RECEIVE)(message);
+const onFail = (error) => createAction(types.NOTIFICATION_ERROR)(error);
 
 const doSend = (api, message) => {
     return new Promise((resolve, reject) => {

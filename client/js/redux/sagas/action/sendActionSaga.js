@@ -1,9 +1,13 @@
-import actionCreator from "../../actions/actionCreator";
-import * as types from "../../actions/actionTypes";
+import {
+    createAction,
+    MESSAGE_SEND,
+    MESSAGE_RECEIVE,
+    NOTIFICATION_ERROR
+} from "../../actions";
 import { take, put, call } from "redux-saga/effects";
 
-const onSuccess = (message) => actionCreator(types.MESSAGE_RECEIVE)(message);
-const onFail = (error) => actionCreator(types.NOTIFICATION_ERROR)(error);
+const onSuccess = (message) => createAction(MESSAGE_RECEIVE)(message);
+const onFail = (error) => createAction(NOTIFICATION_ERROR)(error);
 
 const doSend = (api, message) => {
     return new Promise((resolve, reject) => {
@@ -22,7 +26,7 @@ const doSend = (api, message) => {
 
 export const sendMessageSaga = (api) => {
     return function* sendMessage() {
-        const { value: message } = yield take(types.MESSAGE_SEND);
+        const { value: message } = yield take(MESSAGE_SEND);
         const { response, error } = yield call(doSend, api, message);
 
         if (response) {
