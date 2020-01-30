@@ -22,8 +22,8 @@ const Game = ({ match }) => {
 };
 
 Game.propTypes = {
-    user: PropTypes.object.isRequired,
-    users: PropTypes.array.isRequired,
+    // user: PropTypes.object.isRequired,
+    // users: PropTypes.array.isRequired,
     match: PropTypes.object.isRequired
 };
 

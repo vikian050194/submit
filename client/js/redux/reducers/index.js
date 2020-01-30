@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 
-import user from "./authenticationReducer";
+import user from "./userReducer";
 // import users from "./usersReducer";
 import rooms from "./roomsReducer";
 import messages from "./messagesReducer";

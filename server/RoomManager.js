@@ -31,6 +31,6 @@ module.exports = class RoomManager {
     }
 
     getRooms() {
-        return Array.from(this.rooms.values()).map(c => c.serialize());
+        return Object.values(this.rooms).map(c => c.serialize());
     }
 };

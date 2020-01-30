@@ -63,7 +63,7 @@ const makeRouter = (userManager, roomManager) => {
             const userId = req.cookies["userId"];
             const isSuccess = roomManager.joinRoom(roomId, userId);
 
-            isSuccess ? res.sendStatus(204) : res.sendStatus(404);
+            isSuccess ? res.sendStatus(204) : res.sendStatus(400);
         });
 
     router.route("/*")
