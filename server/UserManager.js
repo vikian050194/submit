@@ -4,17 +4,16 @@ class User {
     constructor(name) {
         this.name = name;
         this.online = true;
-
-        this.generator = new IdGenerator();
     }
 }
 
 module.exports = class UserManager {
     constructor() {
+        this.generator = new IdGenerator();
         this.users = new Map();
 
         //TODO Remove test user
-        const id = "uab12";
+        const id = this.generator.generateUserId();
         const user = new User("user");
         user.online = false;
         this.users.set(id, user);
@@ -22,7 +21,7 @@ module.exports = class UserManager {
 
     join({ name }) {
         for (const iterator of this.users) {
-            const [, user] = iterator;
+            const [id, user] = iterator;
             const isNameInUse = user.name === name;
 
             if (isNameInUse) {
@@ -30,7 +29,7 @@ module.exports = class UserManager {
                     return new Error("Name in use");
                 }
                 else {
-                    return { id: user.id, name };
+                    return { id, name };
                 }
             }
         }

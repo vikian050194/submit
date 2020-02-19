@@ -3,17 +3,20 @@ export const APP_INIT = "APP_INIT";
 export const NOTIFICATION_INFO = "NOTIFICATION_INFO";
 export const NOTIFICATION_ERROR = "NOTIFICATION_ERROR";
 
-export const JOIN_START = "SIGNUP_START";
-export const JOIN_FINISH = "SIGNUP_FINISH";
+export const JOIN_START = "JOIN_START";
+export const JOIN_FINISH = "JOIN_FINISH";
 
-export const QUIT_START = "SIGNIN_START";
-export const QUIT_FINISH = "SIGNIN_FINISH";
+export const QUIT_START = "QUIT_START";
+export const QUIT_FINISH = "QUIT_FINISH";
 
 export const ROOMS_GET_START = "ROOMS_GET_START";
 export const ROOMS_GET_FINISH = "ROOMS_GET_FINISH";
 
-export const ROOM_JOIN_START = "ROOM_JOIN_START";
-export const ROOM_JOIN_FINISH = "ROOM_JOIN_FINISH";
+export const GAME_JOIN_START = "GAME_JOIN_START";
+export const GAME_JOIN_FINISH = "GAME_JOIN_FINISH";
+
+export const GAME_QUIT_START = "GAME_QUIT_START";
+export const GAME_QUIT_FINISH = "GAME_QUIT_FINISH";
 
 export const MESSAGE_SEND = "MESSAGE_SEND";
 export const MESSAGE_RECEIVE = "MESSAGE_RECEIVE";

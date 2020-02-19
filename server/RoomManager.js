@@ -1,10 +1,13 @@
+const IdGenerator = require("./utils/idGenerator");
 const Room = require("./Room");
 
 module.exports = class RoomManager {
     constructor(){
+        this.generator = new IdGenerator();
         this.rooms = {};
 
-        const defaultRoom = new Room("rgh89", "Default");
+        const roomId = this.generator.generateRoomId();
+        const defaultRoom = new Room(roomId, "Default");
         this.rooms[defaultRoom.id] = defaultRoom;
     }
     

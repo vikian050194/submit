@@ -13,12 +13,11 @@ module.exports = class Room {
     }
 
     join(userId){
-        if(this.users.indexOf(userId) !== -1){
-            return false;
-        }
+        const user = this.users.find(u => u.id === userId);
 
-        this.users.push(userId);
-        return true;
+        if(user === undefined){
+            this.users.push(userId);
+        }
     }
 
     // broadcastMessage(message) {

@@ -3,14 +3,14 @@ const dictionary = require("nanoid-dictionary");
 
 module.exports = class IdGenerator {
     generateId() {
-        return `${generate(dictionary.lowercase, 2)}${generate(dictionary.numbers, 2)}`;
+        return `${generate(dictionary.numbers, 4)}`;
     }
 
     generateUserId() {
-        return `u${this.generateUserId()}`;
+        return `u${this.generateId()}`;
     }
 
     generateRoomId() {
-        return `r${this.generateUserId()}`;
+        return `r${this.generateId()}`;
     }
 }

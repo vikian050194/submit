@@ -4,8 +4,8 @@ export * from "./authentication/quitSaga";
 // export { saveUserSaga } from "./authentication/saveUserSaga";
 // export { loadUserSaga } from "./authentication/loadUserSaga";
 
-export * from "./rooms/getRoomsSaga";
-export * from "./rooms/joinRoomSaga";
+export * from "./game/getRoomsSaga";
+export * from "./game/joinGameSaga";
 
 // export { sendMessageSaga } from "./message/sendMessageSaga";
 // export { receiveMessageSaga } from "./message/receiveMessageSaga";

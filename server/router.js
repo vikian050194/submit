@@ -30,12 +30,12 @@ const makeRouter = (userManager, roomManager) => {
             }
         });
 
-    router.route("/api/rooms")
+    router.route("/api/games")
         .get((req, res) => {
             res.send(roomManager.getRooms());
         });
 
-    router.route("/api/rooms/:id")
+    router.route("/api/games/:id")
         .get((req, res) => {
             const { id } = req.params;
             const roomId = parseInt(id);
@@ -44,13 +44,17 @@ const makeRouter = (userManager, roomManager) => {
             room ? res.send(room) : res.sendStatus(404);
         });
 
-    router.route("/api/rooms/:roomId/join")
+    router.route("/api/games/:roomId/join")
         .post((req, res) => {
             const { roomId } = req.params;
-            const userId = req.cookies["userId"];
-            const isSuccess = roomManager.joinRoom(roomId, userId);
-
-            isSuccess ? res.sendStatus(204) : res.sendStatus(400);
+            const userId = req.cookies["id"];
+            
+            try{
+                roomManager.joinRoom(roomId, userId);
+                res.sendStatus(204);
+            } catch(error){
+                res.sendStatus(500);
+            }
         });
 
     router.route("/*")

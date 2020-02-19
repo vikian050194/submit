@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import { goBack } from "connected-react-router";
 import {
     createAction,
-    ROOM_JOIN_START
+    GAME_JOIN_START
 } from "../../redux/actions";
 
-const onJoin = (id) => createAction(ROOM_JOIN_START)(id);
+const onJoin = (id) => createAction(GAME_JOIN_START)(id);
 
 import "./Menu.css";
 

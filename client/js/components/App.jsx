@@ -14,7 +14,8 @@ const App = () => {
     const store = configureStore(persistedState);
 
     store.subscribe(throttle(() => {
-        saveState(store.getState());
+        const { user } = store.getState();
+        saveState({ user });
     }, 1000));
 
     console.info(`App is started at ${(new Date()).toLocaleString()}`);
