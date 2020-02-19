@@ -1,13 +1,12 @@
-.signin-page,
-.signup-page,
+.join-page,
+.quit-page,
 .menu-page,
 .rooms-page {
     justify-content: center;
     align-items: center;
 }
 
-.signin,
-.signup,
+.join,
 .menu,
 .rooms {
     display: grid;

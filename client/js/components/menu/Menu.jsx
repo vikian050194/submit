@@ -4,16 +4,16 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import {
     createAction,
-    SIGNOUT_START,
+    QUIT_START,
     ROOMS_GET_START
 } from "../../redux/actions";
 
-const onSignOut = () => createAction(SIGNOUT_START)();
+const onQuit = () => createAction(QUIT_START)();
 const onGetRooms = () => createAction(ROOMS_GET_START)();
 
 import "./Menu.css";
 
-const Menu = ({ signOut, gotoRooms, gotoSettings }) => {
+const Menu = ({ quit, gotoRooms }) => {
 
     return (
         <div className="page menu-page">
@@ -22,11 +22,8 @@ const Menu = ({ signOut, gotoRooms, gotoSettings }) => {
                 <button className="menu__button" onClick={gotoRooms}>
                     Rooms
                 </button>
-                <button className="menu__button" onClick={gotoSettings} disabled>
-                    Settings
-                </button>
-                <button className="menu__button" onClick={signOut}>
-                    Sign out
+                <button className="menu__button" onClick={quit}>
+                    Quit
                 </button>
             </div>
         </div>
@@ -34,15 +31,13 @@ const Menu = ({ signOut, gotoRooms, gotoSettings }) => {
 };
 
 Menu.propTypes = {
-    signOut: PropTypes.func.isRequired,
-    gotoSettings: PropTypes.func.isRequired,
+    quit: PropTypes.func.isRequired,
     gotoRooms: PropTypes.func.isRequired
 };
 
 const mapActionsToProps = (dispatch) => {
     return {
-        signOut: () => dispatch(onSignOut()),
-        gotoSettings: () => dispatch(push("/settings")),
+        quit: () => dispatch(onQuit()),
         gotoRooms: () => dispatch(onGetRooms())
     };
 };

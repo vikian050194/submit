@@ -3,11 +3,9 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import SignIn from "./menu/SignIn.jsx";
-import SignUp from "./menu/SignUp.jsx";
+import Join from "./menu/Join.jsx";
 import Menu from "./menu/Menu.jsx";
 import Rooms from "./menu/Rooms.jsx";
-import Settings from "./menu/Settings.jsx";
 import Game from "./game/Game.jsx";
 import PageNotFound from "./404/PageNotFound";
 
@@ -18,15 +16,13 @@ const Routes = ({ user }) => {
                 {
                     user.id ?
                         <Redirect to="/menu" /> :
-                        <Redirect to="/signin" />
+                        <Redirect to="/join" />
                 }
             </Route>
-            <Route path="/signin" exact component={SignIn} />
-            <Route path="/signup" exact component={SignUp} />
+            <Route path="/join" exact component={Join} />
             <Route path="/menu" exact component={Menu} />
-            <Route path="/rooms" exact component={Rooms} />
-            <Route path="/rooms/:id" exact component={Game} />
-            <Route path="/settings" exact component={Settings} />
+            <Route path="/games" exact component={Rooms} />
+            <Route path="/games/:id" exact component={Game} />
             <Route component={PageNotFound} />
         </Switch>
     );

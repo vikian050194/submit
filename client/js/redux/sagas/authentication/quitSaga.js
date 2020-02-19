@@ -1,19 +1,19 @@
 import {
     createAction,
-    SIGNOUT_START,
-    SIGNOUT_FINISH,
+    QUIT_START,
+    QUIT_FINISH,
     NOTIFICATION_ERROR
 } from "../../actions";
 import { push } from "connected-react-router";
 import { takeEvery, put, call } from "redux-saga/effects";
-import { signOut } from "./../../../api";
+import { quit } from "../../../api";
 
-const onSuccess = () => createAction(SIGNOUT_FINISH)();
+const onSuccess = () => createAction(QUIT_FINISH)();
 const onFail = (error) => createAction(NOTIFICATION_ERROR)(error);
 
-function* doSignOut({ value: id }) {
+function* doQuit({ value: id }) {
     try {
-        const response = yield call(signOut, { id });
+        const response = yield call(quit, { id });
         yield put(onSuccess(response));
         yield put(push("/"));
     }
@@ -22,6 +22,6 @@ function* doSignOut({ value: id }) {
     }
 }
 
-export function* signOutSaga() {
-    yield takeEvery(SIGNOUT_START, doSignOut);
+export function* quitSaga() {
+    yield takeEvery(QUIT_START, doQuit);
 }

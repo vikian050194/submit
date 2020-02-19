@@ -1,19 +1,19 @@
 import {
     createAction,
-    SIGNUP_START,
-    SIGNUP_FINISH,
+    JOIN_START,
+    JOIN_FINISH,
     NOTIFICATION_ERROR
 } from "../../actions";
 import { push } from "connected-react-router";
 import { takeEvery, put, call } from "redux-saga/effects";
-import { signUp } from "./../../../api";
+import { join } from "../../../api";
 
-const onSuccess = (user) => createAction(SIGNUP_FINISH)(user);
+const onSuccess = (user) => createAction(JOIN_FINISH)(user);
 const onFail = (error) => createAction(NOTIFICATION_ERROR)(error);
 
-function* doSignUp({ value: credentials }) {
+function* doJoin({ value: credentials }) {
     try {
-        const response = yield call(signUp, credentials);
+        const response = yield call(join, credentials);
         yield put(onSuccess(response));
         yield put(push("/menu"));
     }
@@ -22,6 +22,6 @@ function* doSignUp({ value: credentials }) {
     }
 }
 
-export function* signUpSaga() {
-    yield takeEvery(SIGNUP_START, doSignUp);
+export function* joinSaga() {
+    yield takeEvery(JOIN_START, doJoin);
 }

@@ -3,14 +3,11 @@ export const APP_INIT = "APP_INIT";
 export const NOTIFICATION_INFO = "NOTIFICATION_INFO";
 export const NOTIFICATION_ERROR = "NOTIFICATION_ERROR";
 
-export const SIGNUP_START = "SIGNUP_START";
-export const SIGNUP_FINISH = "SIGNUP_FINISH";
+export const JOIN_START = "SIGNUP_START";
+export const JOIN_FINISH = "SIGNUP_FINISH";
 
-export const SIGNIN_START = "SIGNIN_START";
-export const SIGNIN_FINISH = "SIGNIN_FINISH";
-
-export const SIGNOUT_START = "SIGNOUT_START";
-export const SIGNOUT_FINISH = "SIGNOUT_FINISH";
+export const QUIT_START = "SIGNIN_START";
+export const QUIT_FINISH = "SIGNIN_FINISH";
 
 export const ROOMS_GET_START = "ROOMS_GET_START";
 export const ROOMS_GET_FINISH = "ROOMS_GET_FINISH";

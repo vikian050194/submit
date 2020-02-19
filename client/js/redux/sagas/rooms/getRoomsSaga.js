@@ -15,7 +15,7 @@ function* doGetRooms() {
     try {
         const response = yield call(getRooms);
         yield put(onSuccess(response));
-        yield put(push("/rooms"));
+        yield put(push("/games"));
     }
     catch (error) {
         yield put(onFail(error.message));

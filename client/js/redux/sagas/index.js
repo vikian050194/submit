@@ -1,6 +1,5 @@
-export * from "./authentication/signUpSaga";
-export * from "./authentication/signInSaga";
-export * from "./authentication/signOutSaga";
+export * from "./authentication/joinSaga";
+export * from "./authentication/quitSaga";
 
 // export { saveUserSaga } from "./authentication/saveUserSaga";
 // export { loadUserSaga } from "./authentication/loadUserSaga";

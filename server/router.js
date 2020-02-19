@@ -4,41 +4,28 @@ const path = require("path");
 const makeRouter = (userManager, roomManager) => {
     const router = express.Router();
 
-    router.route("/api/signin")
+    router.route("/api/join")
         .post((req, res) => {
-            const { login, password } = req.body;
-            const result = userManager.signIn({ login, password });
+            const { name } = req.body;
+            const result = userManager.join({ name });
 
             if (result instanceof Error) {
                 res.sendStatus(401);
             } else {
-                res.cookie("userId", result.id, { httpOnly: true });
+                res.cookie("id", result.id, { httpOnly: true });
                 res.send(result);
             }
         });
 
-    router.route("/api/signup")
-        .post((req, res) => {
-            const { name, login, password } = req.body;
-            const result = userManager.signUp({ name, login, password });
-
-            if (result instanceof Error) {
-                res.sendStatus(401);
-            } else {
-                res.cookie("userId", result.id, { httpOnly: true });
-                res.send(result);
-            }
-        });
-
-    router.route("/api/signout")
+    router.route("/api/quit")
         .post((req, res) => {
             const { id } = req.body;
-            const result = userManager.signOut({ id });
+            const result = userManager.quit({ id });
 
             if (result instanceof Error) {
                 res.sendStatus(400);
             } else {
-                res.clearCookie("userId");
+                res.clearCookie("id");
                 res.sendStatus(204);
             }
         });

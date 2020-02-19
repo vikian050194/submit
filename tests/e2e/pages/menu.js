@@ -5,12 +5,12 @@ class Menu extends Page {
     constructor() {
         super("menu");
 
-        this.signOut = Selector(".menu__button").withText("Sign out");
+        this.quit = Selector(".menu__button").withText("Quit");
     }
 
-    async doSignOut() {
+    async doQuit() {
         await t
-            .click(this.signOut);
+            .click(this.quit);
     }
 }
 

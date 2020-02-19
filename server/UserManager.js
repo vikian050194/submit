@@ -1,10 +1,8 @@
 const IdGenerator = require("./utils/idGenerator");
 
 class User {
-    constructor(name, login, password) {
+    constructor(name) {
         this.name = name;
-        this.login = login;
-        this.password = password;
         this.online = true;
 
         this.generator = new IdGenerator();
@@ -17,41 +15,33 @@ module.exports = class UserManager {
 
         //TODO Remove test user
         const id = "uab12";
-        const user = new User("user", "user", "user");
+        const user = new User("user");
+        user.online = false;
         this.users.set(id, user);
     }
 
-    signUp({ name, login, password }) {
+    join({ name }) {
         for (const iterator of this.users) {
             const [, user] = iterator;
-            const isLoginInUse = user.login === login;
+            const isNameInUse = user.name === name;
 
-            if (isLoginInUse) {
-                return new Error("Login in use");
+            if (isNameInUse) {
+                if (user.online) {
+                    return new Error("Name in use");
+                }
+                else {
+                    return { id: user.id, name };
+                }
             }
         }
 
         const id = this.generator.generateUserId();
-        this.users.set(id, new User(name, login, password));
+        this.users.set(id, new User(name));
 
         return { id, name };
     }
 
-    signIn({ login, password }) {
-        for (const iterator of this.users) {
-            const [id, user] = iterator;
-            const isCredentialsValid = user.login === login && user.password === password;
-
-            if (isCredentialsValid) {
-                user.online = true;
-                return { id, name: user.name };
-            }
-        }
-
-        return new Error("Sign in failed");
-    }
-
-    signOut({ id }) {
+    quit({ id }) {
         const user = this.users.get(id);
 
         if (!user) {
