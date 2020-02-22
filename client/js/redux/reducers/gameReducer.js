@@ -1,11 +1,15 @@
 import * as types from "../actions/actionTypes";
 
-const defaultState = [];
+const defaultState = {
+    size: 0,
+    capacity: 0,
+    users: []
+};
 
 export default function Reducer(state = defaultState, action) {
     switch (action.type) {
-        case types.NOTIFICATION_ERROR:
-            return [...state, { type: action.type, message: action.value }];
+        case types.ACTION_RECEIVE:
+            return action.value;
         default:
             return state;
     }

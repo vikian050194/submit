@@ -1,17 +1,11 @@
 export const NOTIFICATION_INFO = "NOTIFICATION_INFO";
 export const NOTIFICATION_ERROR = "NOTIFICATION_ERROR";
 
-export const SIGNUP_START = "SIGNUP_START";
-export const SIGNUP_FINISH = "SIGNUP_FINISH";
-export const SIGNUP_FAIL = "SIGNUP_FAIL";
+export const JOIN_START = "JOIN_START";
+export const JOIN_FINISH = "JOIN_FINISH";
 
-export const SIGNIN_START = "SIGNIN_START";
-export const SIGNIN_FINISH = "SIGNIN_FINISH";
-export const SIGNIN_FAIL = "SIGNIN_FAIL";
-
-export const SIGNOUT_START = "SIGNOUT_START";
-export const SIGNOUT_FINISH = "SIGNOUT_FINISH";
-export const SIGNOUT_FAIL = "SIGNOUT_FAIL";
+export const READY_START = "READY_START";
+export const READY_FINISH = "READY_FINISH";
 
 export const MESSAGE_SEND = "MESSAGE_SEND";
 export const MESSAGE_RECEIVE = "MESSAGE_RECEIVE";

@@ -4,13 +4,9 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import configureStore, { history } from "./../redux/configureStore";
 
-import SignIn from "./menu/SignIn.jsx";
-import SignUp from "./menu/SignUp.jsx";
-import Menu from "./menu/Menu.jsx";
-import Rooms from "./menu/Rooms.jsx";
-import Settings from "./menu/Settings.jsx";
+import Join from "./Join.jsx";
 import Game from "./game/Game.jsx";
-import PageNotFound from "./404/PageNotFound";
+import PageNotFound from "./PageNotFound";
 
 const App = () => {
     const store = configureStore();
@@ -22,14 +18,10 @@ const App = () => {
             <ConnectedRouter history={history}>
                 <Switch>
                     <Route exact path="/">
-                        <Redirect to="/signin" />
+                        <Redirect to="/join" />
                     </Route>
-                    <Route path="/signin" exact component={SignIn} />
-                    <Route path="/signup" exact component={SignUp} />
-                    <Route path="/menu" exact component={Menu} />
-                    <Route path="/rooms" exact component={Rooms} />
-                    <Route path="/rooms/:id" exact component={Game} />
-                    <Route path="/settings" exact component={Settings} />
+                    <Route path="/join" exact component={Join} />
+                    <Route path="/game" exact component={Game} />
                     <Route component={PageNotFound} />
                 </Switch>
             </ConnectedRouter>

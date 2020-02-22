@@ -1,35 +1,31 @@
-.background-color-0 {
-    background-color: #f65314;
-}
-
-.background-color-1 {
-    background-color: #7cbb00;
-}
-
-.background-color-2 {
-    background-color: #00a1f1;
-}
-
-.background-color-3 {
-    background-color: #ffbb00;
-}
-
 .foreground-color-0 {
     color: #f65314;
+}
+
+.background-color-0 {
+    background-color: #f65314;
 }
 
 .foreground-color-1 {
     color: #7cbb00;
 }
 
+.background-color-1 {
+    background-color: #7cbb00;
+}
+
 .foreground-color-2 {
     color: #00a1f1;
+}
+
+.background-color-2 {
+    background-color: #00a1f1;
 }
 
 .foreground-color-3 {
     color: #ffbb00;
 }
 
-.foreground-color-s {
-    color: #d3d3d3;
+.background-color-3 {
+    background-color: #ffbb00;
 }

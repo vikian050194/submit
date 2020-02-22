@@ -1,57 +1,22 @@
 const express = require("express");
 const path = require("path");
 
-const makeRouter = (userManager, roomManager) => {
+const Game = require("./Game");
+
+const makeRouter = () => {
+    const game = new Game();
+
     const router = express.Router();
 
-    router.route("/api/signin")
+    router.route("/api/join")
         .post((req, res) => {
-            const { login, password } = req.body;
-            const result = userManager.signIn({ login, password });
-
-            if (result instanceof Error) {
-                res.sendStatus(401);
-            } else {
-                res.send(result);
-            }
+            const user = game.join();
+            res.send(user);
         });
 
-    router.route("/api/signup")
-        .post((req, res) => {
-            const { name, login, password } = req.body;
-            const result = userManager.signUp({ name, login, password });
-
-            if (result instanceof Error) {
-                res.sendStatus(401);
-            } else {
-                res.send(result);
-            }
-        });
-
-    router.route("/api/signout")
-        .post((req, res) => {
-            const { id } = req.body;
-            const result = userManager.signOut({ id});
-
-            if (result instanceof Error) {
-                res.sendStatus(400);
-            } else {
-                res.sendStatus(204);
-            }
-        });
-
-    router.route("/api/rooms")
+    router.route("/api/game")
         .get((req, res) => {
-            res.send(roomManager.getRooms());
-        });
-
-    router.route("/api/rooms/:id")
-        .get((req, res) => {
-            const { id } = req.params;
-            const roomId = parseInt(id);
-            const room = roomManager.getRoom(roomId);
-
-            room ? res.send(room) : res.sendStatus(404);
+            res.send(game.getState());
         });
 
     router.route("/*")

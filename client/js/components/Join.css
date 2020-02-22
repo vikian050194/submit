@@ -1,13 +1,9 @@
-.signin-page,
-.signup-page,
-.menu-page {
+.join-page {
     justify-content: center;
     align-items: center;
 }
 
-.signin,
-.signup,
-.menu {
+.join {
     display: grid;
     vertical-align: middle;
     width: 200px;
