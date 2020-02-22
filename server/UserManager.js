@@ -11,12 +11,15 @@ module.exports = class UserManager {
     constructor() {
         this.generator = new IdGenerator();
         this.users = new Map();
+        this.clients = new Map();
 
-        //TODO Remove test user
-        const id = this.generator.generateUserId();
-        const user = new User("user");
-        user.online = false;
-        this.users.set(id, user);
+        //TODO Remove test users
+        ["a", "b", "c", "d"].forEach(item => {
+            const id = this.generator.generateUserId();
+            const user = new User(item);
+            user.online = false;
+            this.users.set(id, user);
+        }, this);
     }
 
     join({ name }) {
@@ -50,5 +53,13 @@ module.exports = class UserManager {
         user.online = false;
 
         return true;
+    }
+
+    connect(client){
+        this.pool.app(client.id, client);
+    }
+
+    disconnect(client){
+        this.
     }
 };

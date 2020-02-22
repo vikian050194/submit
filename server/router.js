@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 
-const makeRouter = (userManager, roomManager) => {
+const makeRouter = (userManager, gameManager) => {
     const router = express.Router();
 
     router.route("/api/join")
@@ -32,25 +32,25 @@ const makeRouter = (userManager, roomManager) => {
 
     router.route("/api/games")
         .get((req, res) => {
-            res.send(roomManager.getRooms());
+            res.send(gameManager.getRooms());
         });
 
     router.route("/api/games/:id")
         .get((req, res) => {
             const { id } = req.params;
             const roomId = parseInt(id);
-            const room = roomManager.getRoom(roomId);
+            const room = gameManager.getRoom(roomId);
 
             room ? res.send(room) : res.sendStatus(404);
         });
 
-    router.route("/api/games/:roomId/join")
+    router.route("/api/games/:id/join")
         .post((req, res) => {
-            const { roomId } = req.params;
+            const { id } = req.params;
             const userId = req.cookies["id"];
             
             try{
-                roomManager.joinRoom(roomId, userId);
+                gameManager.join(id, userId);
                 res.sendStatus(204);
             } catch(error){
                 res.sendStatus(500);

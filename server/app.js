@@ -8,30 +8,31 @@ const httpServer = require("http").createServer(expressApplication);
 const socketServer = require("socket.io")(httpServer);
 
 const UserManager = require("./UserManager");
-const RoomManager = require("./RoomManager");
+const GameManager = require("./GameManager");
 const makeHandlers = require("./handlers");
 
 const userManager = new UserManager();
-const roomManager = new RoomManager();
+const gameManager = new GameManager(userManager);
 
 socketServer.on("connection", (client) => {
     const {
-        handleSignUp,
-        handleSignIn,
-        handleSignOut
-        // handleMessage,
-        // handleAction
-    } = makeHandlers(client, userManager, roomManager);
+        handleJoin,
+        handleQuit,
+        handleMessage,
+        handleAction
+    } = makeHandlers(client, userManager, gameManager);
 
     console.info(`New client is connected: ${client.id}`);
 
-    client.on("SIGNUP", handleSignUp);
-    client.on("SIGNIN", handleSignIn);
-    client.on("SIGNOUT", handleSignOut);
-    // client.on("MESSAGE", handleMessage);
-    // client.on("ACTION", handleAction);
+    userManager.connectClient(client);
+
+    client.on("JOIN", handleJoin);
+    client.on("QUIT", handleQuit);
+    client.on("MESSAGE", handleMessage);
+    client.on("ACTION", handleAction);
 
     client.on("disconnect", () => {
+        userManager.disconnectClient(client);
         console.info(`Client is disconnected: ${client.id}`);
     });
 

@@ -8,7 +8,7 @@ import { push } from "connected-react-router";
 import { takeEvery, put, call } from "redux-saga/effects";
 import { joinGame } from "../../../api";
 
-const onSuccess = (user) => createAction(GAME_JOIN_FINISH)(user);
+const onSuccess = (game) => createAction(GAME_JOIN_FINISH)(game);
 const onFail = (error) => createAction(NOTIFICATION_ERROR)(error);
 
 function* doJoinGame({ value: gameId }) {

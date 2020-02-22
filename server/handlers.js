@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 module.exports = (client, userManager, roomManager) => {
-    const handleSignUp = (user, cb) => {
+    const handleJoin = (user, cb) => {
         userManager.signUp(user);
         handleSignIn(user, cb);
     };
@@ -93,6 +93,7 @@ module.exports = (client, userManager, roomManager) => {
     };
 
     return {
+
         handleSignUp,
         handleSignIn,
         handleSignOut,
