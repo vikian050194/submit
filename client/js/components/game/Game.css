@@ -1,31 +1,53 @@
-.foreground-color-0 {
+.game-page {
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.color-fg-0 {
     color: #f65314;
 }
 
-.background-color-0 {
+.color-bg-0 {
     background-color: #f65314;
 }
 
-.foreground-color-1 {
+.color-fg-1 {
     color: #7cbb00;
 }
 
-.background-color-1 {
+.color-bg-1 {
     background-color: #7cbb00;
 }
 
-.foreground-color-2 {
+.color-fg-2 {
     color: #00a1f1;
 }
 
-.background-color-2 {
+.color-bg-2 {
     background-color: #00a1f1;
 }
 
-.foreground-color-3 {
+.color-fg-3 {
     color: #ffbb00;
 }
 
-.background-color-3 {
+.color-bg-3 {
     background-color: #ffbb00;
+}
+
+.color-bg-b{
+    border-width: 2px;
+    border-style: solid;
+    border-color: white;
+    animation: blinkingBackground 750ms linear infinite;
+}
+
+@keyframes blinkingBackground {
+    0% {
+        background-color: #f65314;
+    }
+
+    100% {
+        background-color: #d3d3d3;
+    }
 }

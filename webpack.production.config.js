@@ -18,6 +18,6 @@ module.exports = merge(common, {
         })
     ],
     output: {
-        path: path.resolve(__dirname, "release")
+        path: path.resolve(__dirname, "server", "public")
     }
 });

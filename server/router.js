@@ -10,7 +10,9 @@ const makeRouter = () => {
 
     router.route("/api/join")
         .post((req, res) => {
-            const user = game.join();
+            const credentials = req.body;
+
+            const user = game.join(credentials);
             res.send(user);
         });
 
@@ -21,7 +23,7 @@ const makeRouter = () => {
 
     router.route("/*")
         .get((req, res) => {
-            res.sendFile(path.resolve(__dirname + "/../client/build/index.html"));
+            res.sendFile(path.resolve(__dirname, "public", "index.html"));
         });
 
     router.route("*")

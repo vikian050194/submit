@@ -17,6 +17,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "lodash": "^4.17.15",
     "nanoid": "^2.1.11",
     "nanoid-dictionary": "^3.0.0",
     "node-notifier": "^6.0.0",
@@ -37,6 +38,8 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-testcafe": "^0.2.1",
     "file-loader": "^5.1.0",
+    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-root-plugin": "^0.10.0",
     "mini-css-extract-plugin": "^0.9.0",
     "npm": "^6.13.7",
     "prop-types": "^15.7.2",

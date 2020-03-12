@@ -1,9 +1,11 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackRootPlugin = require("html-webpack-root-plugin");
 
 module.exports = {
     mode: "development",
-    entry: ["@babel/polyfill", "./client/js/index.jsx", "./client/build.js"],
+    entry: ["@babel/polyfill", "./client/js/index.jsx"],
     devtool: "inline-source-map",
     module: {
         rules: [
@@ -47,10 +49,15 @@ module.exports = {
     },
     output: {
         filename: "bundle.js",
-        path: path.resolve(__dirname, "client", "build"),
+        path: path.resolve(__dirname, "server", "public"),
         publicPath: "/"
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            "title": "Square",
+            "favicon": "client/favicon.png"
+        }),
+        new HtmlWebpackRootPlugin(),
         new MiniCssExtractPlugin({
             filename: "bundle.css"
         })

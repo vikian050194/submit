@@ -1,5 +1,5 @@
-import ajax from "./ajax";
+import { post } from "./ajax";
 
-export const join = async () => {
-    return await ajax.post("join");
+export const join = async (credentials) => {
+    return await post("join", credentials);
 };

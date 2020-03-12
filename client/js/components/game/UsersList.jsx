@@ -3,24 +3,26 @@ import PropTypes from "prop-types";
 
 import "./UsersList.css";
 
-const UsersList = ({ users }) => {
-    return (<div className="players">
-        <h1>Users</h1>
-        <div className="players__list">
-            {
-                users.map(p =>
-                    <p
-                        key={p.id}
-                        className={`user background-color-${p.id}`}>
-                        {p.name}
-                    </p>
-                )
-            }
+const UsersList = ({ user, users }) => {
+    return (
+        <div className="users">
+            <div className="list">
+                {
+                    users.map(u =>
+                        <p
+                            key={u.id}
+                            className={`user color-bg-${u.id}`}>
+                            {u.score}
+                        </p>
+                    )
+                }
+            </div>
         </div>
-    </div>);
+    );
 };
 
 UsersList.propTypes = {
+    user: PropTypes.object.isRequired,
     users: PropTypes.array.isRequired
 };
 

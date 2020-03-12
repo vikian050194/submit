@@ -1,40 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import createAction from "../../redux/actions/createAction";
+import * as types from "../../redux/actions/actionTypes";
+
+const onGetState = () => createAction(types.GET_STATE_START)();
 
 import UsersList from "./UsersList";
-// import Chat from "./Chat";
-// import Arena from "./Arena";
+import Arena from "./Arena";
 
 import "./Game.css";
 
-const Game = ({ user, game }) => {
+const Game = ({ user, game, getState }) => {
+    useEffect(() => {
+        getState();
+    }, []);
+
     return (
         <div className="page game-page">
-            <UsersList users={[user, ...game.users]} />
-            {/* <Arena arena={arena} />
-            <Chat /> */}
-            {game.capacity}
+            <Arena arena={game} />
+            <UsersList user={user} users={game.users} />
         </div>
     );
 };
 
 Game.propTypes = {
     user: PropTypes.object.isRequired,
-    game: PropTypes.object.isRequired
+    game: PropTypes.object.isRequired,
+    getState: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
-        user: state.user,
-        game: state.game
+        game: state.game,
+        user: state.user
     };
 };
 
-// const mapActionsToProps = (dispatch) => {
-//     return {
-//         login: (userName) => dispatch(login(userName))
-//     };
-// };
+const mapActionsToProps = (dispatch) => {
+    return {
+        getState: () => dispatch(onGetState())
+    };
+};
 
-export default connect(mapStateToProps, null)(Game);
+export default connect(mapStateToProps, mapActionsToProps)(Game);

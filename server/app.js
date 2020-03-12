@@ -8,7 +8,7 @@ const httpServer = require("http").createServer(expressApplication);
 expressApplication.use(bodyParser.json());
 expressApplication.use(bodyParser.urlencoded({ extended: true }));
 
-expressApplication.use(express.static("client/build"));
+expressApplication.use(express.static("server/public"));
 
 const router = require("./router")();
 expressApplication.use("/", router);

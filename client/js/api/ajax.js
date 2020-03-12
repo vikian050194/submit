@@ -1,5 +1,5 @@
 const makeRequest = async (method = "GET", url = "", data = {}) => {
-    const response = await fetch(`/api/${url}`, {
+    const options = {
         method,
         mode: "cors",
         cache: "no-cache",
@@ -10,7 +10,13 @@ const makeRequest = async (method = "GET", url = "", data = {}) => {
         redirect: "follow",
         referrerPolicy: "no-referrer",
         body: JSON.stringify(data)
-    });
+    };
+
+    if (method === "GET") {
+        delete options.body;
+    }
+
+    const response = await fetch(`/api/${url}`, options);
 
     if (response.status === 200) {
         return await response.json();
@@ -27,7 +33,7 @@ const post = async (url, data) => {
     return await makeRequest("POST", url, data);
 };
 
-export default {
+export {
     get,
     post
 };

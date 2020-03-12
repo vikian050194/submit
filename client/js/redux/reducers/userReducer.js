@@ -1,9 +1,7 @@
 import * as types from "../actions/actionTypes";
 
 const defaultState = {
-    id: null,
-    score: 0,
-    state: null
+    id: null
 };
 
 export default function Reducer(state = defaultState, action) {

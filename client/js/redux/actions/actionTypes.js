@@ -7,6 +7,9 @@ export const JOIN_FINISH = "JOIN_FINISH";
 export const READY_START = "READY_START";
 export const READY_FINISH = "READY_FINISH";
 
+export const GET_STATE_START = "GET_STATE_START";
+export const GET_STATE_FINISH = "GET_STATE_FINISH";
+
 export const MESSAGE_SEND = "MESSAGE_SEND";
 export const MESSAGE_RECEIVE = "MESSAGE_RECEIVE";
 

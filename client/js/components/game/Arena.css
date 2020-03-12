@@ -1,31 +1,41 @@
+.arena {
+    display: table;
+    height: 100%;
+}
+
+.grid {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 .cell {
     border: 1px dotted lightgrey;
 }
 
 .square {
+    text-align: center;
     width: 25px;
     height: 25px;
     line-height: 25px;
     border-radius: 5px;
-    text-align: center;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.empty{
+    border-color: white;;
 }
 
 .unit {
-    border-width: 2px;
-    border-style: solid;
     border-color: white;
 }
 
 .wall {
-    border-width: 2px;
-    border-style: solid;
     border-color: grey;
     background-color: lightgrey;
 }
 
-.let {
-    border-width: 2px;
-    border-style: solid;
+.block {
     border-color: ghostwhite;
     background-color: lightgrey;
 }

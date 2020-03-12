@@ -1,5 +1,20 @@
+.users {
+    width: 200px;
+    display: table;
+    height: 100%;
+}
+
+.list {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 .user {
     color: white;
     text-align: center;
     border-radius: 5px;
+}
+
+.user>span {
+    margin: 0 10px;
 }
