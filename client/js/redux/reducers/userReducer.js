@@ -1,7 +1,8 @@
 import * as types from "../actions/actionTypes";
 
 const defaultState = {
-    id: null
+    id: null,
+    isPlayer: false
 };
 
 export default function Reducer(state = defaultState, action) {

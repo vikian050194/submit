@@ -25,7 +25,7 @@ const Arena = ({ arena }) => {
 
     return (
         <div className="arena">
-            <table className="grid">
+            <table>
                 <tbody>
                     {
                         (() => {

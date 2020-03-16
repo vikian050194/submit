@@ -1,13 +1,3 @@
-.arena {
-    display: table;
-    height: 100%;
-}
-
-.grid {
-    display: table-cell;
-    vertical-align: middle;
-}
-
 .cell {
     border: 1px dotted lightgrey;
 }

@@ -1,6 +1,18 @@
 .game-page {
-    justify-content: space-around;
-    flex-direction: row;
+
+}
+
+.space{
+    flex: 1 1 auto;
+}
+
+.actions{
+    margin: 2rem 0;
+}
+
+.info{
+    margin: 2rem 0;
+    text-transform: uppercase;
 }
 
 .color-fg-0 {

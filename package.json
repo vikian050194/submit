@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run server:dev & npm run client:dev",
     "client:dev": "webpack -w",
     "client:build": "webpack",
     "client:release": "webpack --config webpack.production.config.js",

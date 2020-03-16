@@ -13,5 +13,7 @@ export const GET_STATE_FINISH = "GET_STATE_FINISH";
 export const MESSAGE_SEND = "MESSAGE_SEND";
 export const MESSAGE_RECEIVE = "MESSAGE_RECEIVE";
 
+export const USER_INPUT = "USER_INPUT";
+
 export const ACTION_SEND = "ACTION_SEND";
 export const ACTION_RECEIVE = "ACTION_RECEIVE";
