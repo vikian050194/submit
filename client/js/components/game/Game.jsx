@@ -20,6 +20,7 @@ const Space = () => {
 const Actions = () => {
     const count = 10;
     const actions = (new Array(count)).fill(0);
+    const options = ["L", "R", "U", "D", "B"];
 
     return (
         <div className="actions">
@@ -32,7 +33,9 @@ const Actions = () => {
                                 const classes = ["square", actionType];
 
                                 return <td className="cell" key={index}>
-                                    <div className={classes.join(" ")}></div>
+                                    <div className={classes.join(" ")}>
+                                        {options[index % 4]}
+                                    </div>
                                 </td>;
                             })
                         }
@@ -43,12 +46,15 @@ const Actions = () => {
     );
 };
 
-const Info = () => {
+const Info = ({ value }) => {
     return (
         <div className="info">
-            Info
+            {value}
         </div>
     );
+};
+Info.propTypes = {
+    value: PropTypes.string.isRequired
 };
 
 const Game = ({ user, game, getState }) => {
@@ -63,15 +69,14 @@ const Game = ({ user, game, getState }) => {
             <Arena arena={game} />
             {/* <UsersList user={user} users={game.users} /> */}
             <Space />
-            <Info />
+            {/* <Info value={"Some info should be here"}/> */}
         </div>
     );
 };
 
 Game.propTypes = {
     user: PropTypes.object.isRequired,
-    game: PropTypes.object.isRequired,
-    getState: PropTypes.func.isRequired
+    game: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => {
