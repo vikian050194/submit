@@ -36,14 +36,6 @@ module.exports = {
                     limit: 1024,
                     name: "[name].[ext]"
                 }
-            },
-            {
-                test: /\.(html)$/,
-                loader: "file-loader",
-                options: {
-                    limit: 1024,
-                    name: "[name].[ext]"
-                }
             }
         ]
     },
