@@ -21,7 +21,7 @@ const getUser = (state) => state.user;
 
 function* onInput (input) {
     let user = yield select(getUser);
-    
+
     if (input.actions.length === 1 && input.actions[0] === "start") {//&& user.id === null 
         yield put(onJoin(user));
     }

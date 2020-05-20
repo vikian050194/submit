@@ -76,7 +76,8 @@ const Game = ({ user, game, getState }) => {
 
 Game.propTypes = {
     user: PropTypes.object.isRequired,
-    game: PropTypes.object.isRequired
+    game: PropTypes.object.isRequired,
+    getState: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
