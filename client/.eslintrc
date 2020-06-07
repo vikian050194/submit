@@ -1,5 +1,12 @@
 {
     "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true,
+        "mocha": true
+    },
+    "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:testcafe/recommended"],
     "parserOptions": {
         "ecmaVersion": 6,
         "ecmaFeatures": {
@@ -8,15 +15,7 @@
             "impliedStrict": true
         },
         "sourceType": "module"
-    },
-    "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:testcafe/recommended"],
-    "env": {
-        "browser": true,
-        "commonjs": true,
-        "es6": true,
-        "node": true,
-        "mocha": true
-    },
+    },    
     "rules": {
         "quotes": [ "error", "double" ],
         "semi": [ "error", "always" ],
@@ -29,7 +28,7 @@
     "settings": {
         "react": {
             "pragma": "React",
-            "version": "16.8"
+            "version": "detect"
         }
     }
 }

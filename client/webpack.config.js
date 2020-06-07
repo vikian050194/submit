@@ -1,11 +1,12 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebpackRootPlugin = require("html-webpack-root-plugin");
+
+const buildFolderName = "public";
 
 module.exports = {
     mode: "development",
-    entry: ["@babel/polyfill", "./client/js/index.jsx"],
+    entry: ["@babel/polyfill", "./src/index.jsx"],
     devtool: "inline-source-map",
     module: {
         rules: [
@@ -41,17 +42,33 @@ module.exports = {
     },
     output: {
         filename: "bundle.js",
-        path: path.resolve(__dirname, "server", "public"),
+        path: path.resolve(__dirname, buildFolderName),
         publicPath: "/"
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            "title": "Square",
-            "favicon": "client/favicon.png"
-        }),
-        new HtmlWebpackRootPlugin(),
         new MiniCssExtractPlugin({
             filename: "bundle.css"
+        }),
+        new CopyPlugin({
+            patterns: [
+                { from: "src/index.html" },
+                { from: "src/favicon.ico" }
+            ]
         })
-    ]
+    ],
+    devServer: {
+        index: path.resolve(__dirname, buildFolderName, "index.html"),
+        contentBase: path.resolve(__dirname, buildFolderName),
+        publicPath: "/",
+        port: 8080,
+        watchContentBase: false,
+        open: true,
+        inline: true,
+        proxy: {
+            "/api": {
+                target: "http://localhost:8081",
+                pathRewrite: {"^/api" : ""}
+            }
+        }
+    }
 };

@@ -2,21 +2,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}",
-            "userDataDir": false
-        },
-        {
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceRoot}/server/app.js",
+            "program": "${workspaceRoot}/src/app.js",
             "cwd": "${workspaceRoot}",
             "env": {
-                "NODE_ENV": "testing"
+                "NODE_ENV": "testing",
+                
             }
         },
         {

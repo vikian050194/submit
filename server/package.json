@@ -1,0 +1,32 @@
+{
+  "name": "determination-server",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node-dev src/app.js",
+    "test": "mocha ./tests/**/*-tests.js",
+    "cover": "nyc --reporter=html npm run test",
+    "docker": "docker run -it --rm -p 8081:8081 -v $(pwd):/var/www -w \"/var/www\" node:current-slim /bin/bash -c \"npm i && node src/app.js\""
+  },
+  "engines": {
+    "node": "^12.16.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "nanoid": "^3.1.9",
+    "nanoid-dictionary": "^3.0.0",
+    "node-notifier": "^7.0.1",
+    "random-int": "^2.0.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "assert": "^2.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.1.0",
+    "mocha": "^7.2.0",
+    "node-dev": "^4.0.0",
+    "nyc": "^15.0.1"
+  }
+}
