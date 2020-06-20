@@ -6,7 +6,7 @@ import * as types from "../../redux/actions/actionTypes";
 
 const onGetState = () => createAction(types.GET_STATE_START)();
 
-// import UsersList from "./UsersList";
+import UsersList from "./UsersList";
 import Arena from "./Arena";
 
 import "./Game.css";
@@ -18,9 +18,13 @@ const Space = () => {
 };
 
 const Actions = () => {
-    const count = 10;
+    const count = 1;
     const actions = (new Array(count)).fill(0);
-    const options = ["L", "R", "U", "D", "B"];
+    const options = ["L", "R", "U", "D"];
+
+    const onClick = (index) => () => {
+        actions[index] = (actions[index] + 1) % options.length;
+    };
 
     return (
         <div className="actions">
@@ -29,12 +33,12 @@ const Actions = () => {
                     <tr>
                         {
                             actions.map((a, index) => {
-                                const actionType = index < 3 ? "wall" : index < 6 ? "block" : "empty";
+                                const actionType = "empty";
                                 const classes = ["square", actionType];
 
                                 return <td className="cell" key={index}>
-                                    <div className={classes.join(" ")}>
-                                        {options[index % 4]}
+                                    <div className={classes.join(" ")} onClick={onClick(index)}>
+                                        {options[a]}
                                     </div>
                                 </td>;
                             })
@@ -66,10 +70,12 @@ const Game = ({ user, game, getState }) => {
         <div className="page game-page">
             <Actions />
             <Space />
-            <Arena arena={game} />
-            {/* <UsersList user={user} users={game.users} /> */}
+            <div className="middle">
+                <Arena arena={game} />
+                <UsersList user={user} users={game.users} />
+            </div>
             <Space />
-            {/* <Info value={"Some info should be here"}/> */}
+            <Info value={"Some info should be here"} />
         </div>
     );
 };

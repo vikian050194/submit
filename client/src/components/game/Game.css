@@ -1,53 +1,55 @@
-.game-page {
+.game-page {}
 
+.middle{
+    display: flex;
 }
 
-.space{
+.space {
     flex: 1 1 auto;
 }
 
-.actions{
+.actions {
     margin: 2rem 0;
 }
 
-.info{
+.info {
     margin: 2rem 0;
-    /* text-transform: uppercase; */
+    text-transform: uppercase;
 }
 
 .color-fg-0 {
-    color: #f65314;
+    color: var(--color0);
 }
 
 .color-bg-0 {
-    background-color: #f65314;
+    background-color: var(--color0);
 }
 
 .color-fg-1 {
-    color: #7cbb00;
+    color: var(--color1);
 }
 
 .color-bg-1 {
-    background-color: #7cbb00;
+    background-color: var(--color1);
 }
 
 .color-fg-2 {
-    color: #00a1f1;
+    color: var(--color2);
 }
 
 .color-bg-2 {
-    background-color: #00a1f1;
+    background-color: var(--color2);
 }
 
 .color-fg-3 {
-    color: #ffbb00;
+    color: var(--color3);
 }
 
 .color-bg-3 {
-    background-color: #ffbb00;
+    background-color: var(--color3);
 }
 
-.color-bg-b{
+.color-bg-b {
     border-width: 2px;
     border-style: solid;
     border-color: white;

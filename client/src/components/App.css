@@ -14,3 +14,10 @@ body {
 h1 {
     text-align: center;
 }
+
+:root {
+    --color0: #f65314;
+    --color1: #7cbb00;
+    --color2: #00a1f1;
+    --color3: #ffbb00;
+}

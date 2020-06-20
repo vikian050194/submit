@@ -13,7 +13,17 @@ router.route("/join")
         res.send(user);
     });
 
-router.route("/game")
+router.route("/leave/:id")
+    .post((req, res) => {
+        const {
+            id
+        } = req.params;
+
+        const user = game.leave({ id });
+        res.send(user);
+    });
+
+router.route("/state")
     .get((req, res) => {
         res.send(game.getState());
     });

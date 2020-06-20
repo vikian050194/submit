@@ -28,7 +28,7 @@ const App = () => {
         <Provider store={store}>
             <ConnectedRouter history={history}>
                 <Switch>
-                    <Route path="/" exact component={Game} />
+                    <Route path="/" exact={true} component={Game} />
                     <Route component={PageNotFound} />
                 </Switch>
             </ConnectedRouter>

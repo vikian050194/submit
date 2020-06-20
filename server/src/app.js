@@ -15,5 +15,5 @@ expressApplication.use(logger);
 expressApplication.use("/", router);
 
 httpServer.listen(port, () => {
-    console.info(`Server is listening on port ${port}`);
+    console.info("Listening on port " + port);
 });
