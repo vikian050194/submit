@@ -10,10 +10,11 @@ const logger = (req, res, next) => {
 
     res.on("finish", () => {
         console.info(`${getTime()} ${req.method} ${req.originalUrl} ${res.statusCode}`);
+        // console.info(`${res.statusCode} ${res.statusMessage}; ${res.get("Content-Length") || 0}b sent`);
+
         if(req.method === "POST"){
             console.info(req.body);
         }
-        // console.info(`${res.statusCode} ${res.statusMessage}; ${res.get("Content-Length") || 0}b sent`);
     });
 
     next();

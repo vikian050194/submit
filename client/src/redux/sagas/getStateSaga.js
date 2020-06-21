@@ -18,4 +18,6 @@ function* doGetState() {
 
 export function* getStateSaga() {
     yield takeEvery(types.GET_STATE_START, doGetState);
+    yield takeEvery(types.JOIN_FINISH, doGetState);
+    yield takeEvery(types.LEAVE_FINISH, doGetState);
 }

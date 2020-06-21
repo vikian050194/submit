@@ -3,6 +3,7 @@ class User {
         this.id = id;
         this.name = name;
 
+        this.action = null;
         this.score = 0;
         this.x = 0;
         this.y = 0;
@@ -11,4 +12,4 @@ class User {
     }
 }
 
-exports.modules = User;
+module.exports = User;

@@ -13,14 +13,20 @@ router.route("/join")
         res.send(user);
     });
 
-router.route("/leave/:id")
+router.route("/leave")
     .post((req, res) => {
-        const {
-            id
-        } = req.params;
+        const credentials = req.body;
 
-        const user = game.leave({ id });
-        res.send(user);
+        game.leave(credentials);
+        res.send({id: null});
+    });
+
+router.route("/submit")
+    .post((req, res) => {
+        const data = req.body;
+
+        game.submit(data);
+        res.sendStatus(200);
     });
 
 router.route("/state")

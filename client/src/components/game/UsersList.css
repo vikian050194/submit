@@ -13,8 +13,15 @@
     color: white;
     text-align: center;
     border-radius: 5px;
+    display: flex;
+    justify-content: space-around;
 }
 
 .user>span {
     margin: 0 10px;
+}
+
+.join{
+    cursor: pointer;
+    background-color: var(--color-grey-light);
 }

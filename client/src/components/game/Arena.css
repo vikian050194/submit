@@ -21,11 +21,11 @@
 }
 
 .wall {
-    border-color: grey;
-    background-color: lightgrey;
+    border-color: var(--color-grey-dark);
+    background-color: var(--color-grey-light);
 }
 
 .block {
-    border-color: ghostwhite;
-    background-color: lightgrey;
+    border-color: #f8f8ff;
+    background-color: var(--color-grey-light);
 }

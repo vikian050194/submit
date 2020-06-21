@@ -11,3 +11,6 @@ export const LEAVE_FINISH = "LEAVE_FINISH";
 
 export const GET_STATE_START = "GET_STATE_START";
 export const GET_STATE_FINISH = "GET_STATE_FINISH";
+
+export const SUBMIT_START = "SUBMIT_START";
+export const SUBMIT_FINISH = "SUBMIT_FINISH";

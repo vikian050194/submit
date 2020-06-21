@@ -1,4 +1,4 @@
-const { User } = require("./User");
+const User = require("./User");
 
 const names = ["A", "B"];
 const size = 10;
@@ -33,6 +33,10 @@ module.exports = class Game {
             }
         }
 
+        if (this.users.length === this.capacity) {
+            return { id: null };
+        }
+
         const id = this.users.length;
 
         const user = new User(id, names[id]);
@@ -42,6 +46,48 @@ module.exports = class Game {
         this.users.push(user);
 
         return { id };
+    }
+
+    leave(credentials) {
+        if (credentials && credentials.id !== undefined) {
+            const user = this.users.find(({ id }) => id === credentials.id);
+
+            if (user) {
+                this.users = this.users.filter(u => u !== user);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    submit({ id: uid, action }) {
+        const user = this.users.find(({ id }) => id === uid);
+        user.action = action;
+
+        this.tryRun();
+    }
+
+    tryRun() {
+        const isFullHouse = this.users.length === this.capacity;
+        const isActionsPrepared = !this.users.some(({ action }) => action === null);
+
+        if (isFullHouse && isActionsPrepared) {
+            this.run();
+        }
+    }
+
+    run() {
+        this.users.forEach((user) => {
+            const { x, y, action } = user;
+            let newX = action === 0 ? x - 1 : x;
+            newX = action === 1 ? x + 1 : newX;
+            let newY = action === 2 ? y - 1 : y;
+            newY = action === 3 ? y + 1 : newY;
+            user.action = null;
+            user.x = newX;
+            user.y = newY;
+        });
     }
 
     getState() {
