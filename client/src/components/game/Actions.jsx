@@ -25,33 +25,28 @@ export const Actions = ({ refresh, submit, user }) => {
     });
 
     const renderButtons = () => {
-        const classes = (additional) => ["square", "button", additional];
-
-        return [
-            <td className="cell action" key="submit">
-                <div className={classes("submit").join(" ")} onClick={() => submit({ id: user.id, action: actions[0] })}>
-                    submit
-                </div>
-            </td>,
-            <td className="cell action" key="refresh">
-                <div className={classes("refresh").join(" ")} onClick={refresh}>
-                    refresh
-                </div>
-            </td>
-        ];
+        return <div className="buttons">
+            <span className={"button submit"} onClick={() => submit({ id: user.id, action: actions[0] })}>
+                submit
+            </span>
+            <span className={"button refresh"} onClick={refresh}>
+                refresh
+            </span>
+        </div>;
     };
 
     return (
         <div className="actions">
-            <table>
-                <tbody>
-                    <tr>
-                        {
-                            [...renderActions(), ...renderButtons()]
-                        }
-                    </tr>
-                </tbody>
-            </table>
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            {renderActions()}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {renderButtons()}
         </div>
     );
 };

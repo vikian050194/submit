@@ -18,7 +18,7 @@ router.route("/leave")
         const credentials = req.body;
 
         game.leave(credentials);
-        res.send({id: null});
+        res.send({ id: null });
     });
 
 router.route("/submit")
@@ -26,7 +26,7 @@ router.route("/submit")
         const data = req.body;
 
         game.submit(data);
-        res.sendStatus(200);
+        res.sendStatus(204);
     });
 
 router.route("/state")

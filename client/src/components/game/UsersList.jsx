@@ -5,23 +5,23 @@ import "./UsersList.css";
 
 const UsersList = ({ user, users, join, leave }) => {
     const renderPlayers = () => users.map(u =>
-        <p
+        <div
             key={u.id}
-            className={`user color-bg-${u.id}`}>
+            className={`user color-bg-${u.id} ${user.id === u.id ? "you" : ""}`}>
             <span>{u.name}</span>
             <span>{u.hp}</span>
             <span>{u.score}</span>
-        </p>
+        </div>
     );
 
     const renderButton = () => {
         return user.type === "guest" ?
-            <p key="refresh" className={"user join"} onClick={join}>
+            <div key="refresh" className={"user join"} onClick={join}>
                 join
-            </p> :
-            <p key="refresh" className={"user join"} onClick={leave}>
+            </div> :
+            <div key="refresh" className={"user join"} onClick={leave}>
                 leave
-            </p>;
+            </div>;
     };
 
     return (

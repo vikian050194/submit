@@ -2,6 +2,7 @@
     width: 200px;
     display: table;
     height: 100%;
+    margin-left: 33px;
 }
 
 .list {
@@ -10,18 +11,26 @@
 }
 
 .user {
-    color: white;
+    color: var(--color-white);
     text-align: center;
     border-radius: 5px;
     display: flex;
     justify-content: space-around;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--color-white);
+    margin: 5px 0;
+}
+
+.you {
+    border-color: var(--color-black);
 }
 
 .user>span {
     margin: 0 10px;
 }
 
-.join{
+.join {
     cursor: pointer;
     background-color: var(--color-grey-light);
 }

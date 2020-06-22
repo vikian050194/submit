@@ -1,9 +1,10 @@
 const User = require("./User");
 
-const names = ["A", "B"];
-const size = 10;
-const spawn = [[0, 0], [size - 1, size - 1], [0, size - 1], [size - 1, 0]];
-const wallPattern = [[1, 1], [1, 2], [2, 1], [3, 3]];
+const names = ["A", "B", "C", "D"];
+const size = 7;
+const spawnIndex = 2;
+const spawn = [[spawnIndex, spawnIndex], [size - spawnIndex - 1, size - spawnIndex - 1], [spawnIndex, size - spawnIndex - 1], [size - spawnIndex - 1, spawnIndex]];
+const wallPattern = [[1, 1], [1, 2], [2, 1]];
 
 const applyPattern = (pattern) => {
     const max = size - 1;

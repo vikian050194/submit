@@ -13,11 +13,11 @@
 }
 
 .empty{
-    border-color: white;;
+    border-color: var(--color-white);
 }
 
 .unit {
-    border-color: white;
+    border-color: var(--color-white);
 }
 
 .wall {
@@ -26,6 +26,6 @@
 }
 
 .block {
-    border-color: #f8f8ff;
+    border-color: var(--color-white);
     background-color: var(--color-grey-light);
 }
