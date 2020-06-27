@@ -1,10 +1,11 @@
 # TBD
 
-[![Maintenance Status][status-image]][status-url]
+[![MIT license][license-badge]][license-url]
+[![Maintenance Status][status-badge]][status-url]
 
 ## Описание
 
-Сетевая итерационная стратегия?
+Сетевая итерационная стратегия. Пока что.
 
 ## Основные особенности с точки зрения пользователя
 - Возможность игры по сети
@@ -13,12 +14,11 @@
 - Чат
 - Множество комнат
 - Настройка режима игры
-- ???
 
 ## Основные особенности с технической точки зрения
+- TDD
 - WebSocket
 - Gamepad API
-- ???
 
 ## Build and run
 `npm i` скачать npm пакеты
@@ -104,4 +104,7 @@
 Юнитам наносится урон.
 
 [status-url]: https://github.com/vikian050194/tbd/pulse
-[status-image]: https://img.shields.io/github/last-commit/vikian050194/tbd.svg
+[status-badge]: https://img.shields.io/github/last-commit/vikian050194/tbd.svg
+
+[license-url]: https://github.com/vikian050194/tbd/blob/master/LICENSE
+[license-badge]: https://img.shields.io/github/license/vikian050194/tbd.svg
