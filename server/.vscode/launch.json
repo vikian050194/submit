@@ -18,6 +18,18 @@
             "name": "Attach to Process",
             "port": 5858,
             "processId": "${command:PickProcess}"
+        },
+        {
+            "name": "Debug tests",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+            "stopOnEntry": false,
+            "args": [
+                "${file}",
+                "--no-timeouts"
+            ],
+            "cwd": "${workspaceRoot}"
         }
     ]
 }
