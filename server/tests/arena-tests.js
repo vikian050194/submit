@@ -43,7 +43,7 @@ describe("Arena", function () {
 
             const expectedStepsCount = 1;
 
-            assert.equal(arena.getStepsCount(), expectedStepsCount);
+            assert.equal(arena.getSnaphotsCount(), expectedStepsCount);
         });
 
         it("Size is explicitly set", function () {
@@ -52,7 +52,7 @@ describe("Arena", function () {
 
             const expectedStepsCount = 1;
 
-            assert.equal(arena.getStepsCount(), expectedStepsCount);
+            assert.equal(arena.getSnaphotsCount(), expectedStepsCount);
         });
 
         it("Wall pattern is explicitly set", function () {
@@ -77,6 +77,33 @@ describe("Arena", function () {
         });
     });
 
+    describe("getStaticData", function () {
+        it("Default size and default walls pattern", function () {
+            const expectedSize = 10;
+            const expectedWallsLength = 0;
+
+            const arena = new Arena();
+
+            const staticData = arena.getStaticData();
+
+            assert.equal(staticData.size, expectedSize);
+            assert.equal(staticData.walls.length, expectedWallsLength);
+        });
+
+        it("Size is 42 and walls pattern contains one item", function () {
+            const expectedSize = 42;
+            const expectedWallsLength = 4;
+            const testWallsPattern = [[0, 0]];
+
+            const arena = new Arena(42, testWallsPattern);
+
+            const staticData = arena.getStaticData();
+
+            assert.equal(staticData.size, expectedSize);
+            assert.equal(staticData.walls.length, expectedWallsLength);
+        });
+    });
+
     describe("addPlayer", function () {
         it("One player", function () {
             const arena = new Arena();
@@ -91,10 +118,10 @@ describe("Arena", function () {
             assert.equal(addedPlayer.x, 0);
             assert.equal(addedPlayer.y, 0);
             assert.equal(addedPlayer.id, player.id);
-            assert.equal(arena.getStepsCount(), expectedStepsCount);
-            assert.notStrictEqual(arena.getSteps(0, 1)[0], arena.getSteps(1, 1)[0]);
-            assert.equal(arena.getSteps(0, 1)[0].players.length, 0);
-            assert.equal(arena.getLastStep().players.length, expectedPlayersCount);
+            assert.equal(arena.getSnaphotsCount(), expectedStepsCount);
+            assert.notStrictEqual(arena.getSnapshots(0, 1)[0], arena.getSnapshots(1, 1)[0]);
+            assert.equal(arena.getSnapshots(0, 1)[0].players.length, 0);
+            assert.equal(arena.getLastSnapshot().players.length, expectedPlayersCount);
         });
 
         it("Four players", function () {
@@ -103,17 +130,38 @@ describe("Arena", function () {
             const expectedStepsCount = 5;
             const expectedPlayersCount = 4;
 
-            arena.addPlayer({id: 0});
-            arena.addPlayer({id: 1});
-            arena.addPlayer({id: 2});
-            arena.addPlayer({id: 3});
+            arena.addPlayer({ id: 0 });
+            arena.addPlayer({ id: 1 });
+            arena.addPlayer({ id: 2 });
+            arena.addPlayer({ id: 3 });
 
-            assert.equal(arena.getStepsCount(), expectedStepsCount);
-            assert.equal(arena.getLastStep().players.length, expectedPlayersCount);
-            assert.equal(arena.getSteps(0, 1)[0].players.length, 0);
-            assert.equal(arena.getSteps(1, 1)[0].players.length, 1);
-            assert.equal(arena.getSteps(2, 1)[0].players.length, 2);
-            assert.equal(arena.getSteps(3, 1)[0].players.length, 3);
+            assert.equal(arena.getSnaphotsCount(), expectedStepsCount);
+            assert.equal(arena.getFullState().players.length, expectedPlayersCount);
+            assert.equal(arena.getSnapshots(0, 1)[0].players.length, 0);
+            assert.equal(arena.getSnapshots(1, 1)[0].players.length, 1);
+            assert.equal(arena.getSnapshots(2, 1)[0].players.length, 2);
+            assert.equal(arena.getSnapshots(3, 1)[0].players.length, 3);
+        });
+
+        describe("removePlayer", function () {
+            it("Remove single added player", function () {
+                const arena = new Arena();
+
+                const expectedStepsCount = 3;
+                const expectedPlayersCount = 0;
+
+                const player = { id: 0 };
+
+                arena.addPlayer(player);
+                const isSuccess = arena.removePlayer(player);
+
+                assert.equal(isSuccess, true);
+                assert.equal(arena.getSnaphotsCount(), expectedStepsCount);
+                assert.equal(arena.getSnapshots(0, 1)[0].players.length, 0);
+                assert.equal(arena.getSnapshots(1, 1)[0].players.length, 1);
+                assert.equal(arena.getSnapshots(2, 1)[0].players.length, 0);
+                assert.equal(arena.getLastSnapshot().players.length, expectedPlayersCount);
+            });
         });
     });
 });

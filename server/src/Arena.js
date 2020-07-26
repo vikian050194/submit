@@ -4,7 +4,7 @@ const defaultSize = 10;
 const defaultWallPattern = [];
 const defaultSpawnPattern = [[0, 0]];
 
-class Step {
+class Snapshot {
     constructor() {
         this.players = [];
     }
@@ -12,43 +12,57 @@ class Step {
 
 module.exports = class Arena {
     constructor(size = defaultSize, wallPattern = defaultWallPattern, spawnPattern = defaultSpawnPattern) {
-        this._steps = [new Step()];
+        this._history = [new Snapshot()];
 
-        this._size = size;
-        this._walls = applyPattern(size, wallPattern);
-        this._spawnPoints = applyPattern(size, spawnPattern);
+        this.size = size;
+        this.walls = applyPattern(size, wallPattern);
+        this.spawnPoints = applyPattern(size, spawnPattern);
     }
 
     getSpawnPoint(id) {
-        return this._spawnPoints[id];
+        return this.spawnPoints[id];
     }
 
     getSpawnPoints() {
-        return this._spawnPoints;
+        return this.spawnPoints;
     }
 
     getWalls() {
-        return this._walls;
+        return this.walls;
     }
 
-    getSteps(index, count) {
+    getSnapshots(index, count) {
         if (index === undefined) {
-            return this._steps;
+            return this._history;
         }
 
         if (count === undefined) {
-            return this._steps.slice(index);
+            return this._history.slice(index);
         }
 
-        return this._steps.slice(index, index + count);
+        return this._history.slice(index, index + count);
     }
 
-    getLastStep() {
-        return this._steps[this._steps.length - 1];
+    getLastSnapshot() {
+        return this._history[this._history.length - 1];
     }
 
-    getStepsCount() {
-        return this._steps.length;
+    getSnaphotsCount() {
+        return this._history.length;
+    }
+
+    removePlayer(credentials) {
+        const player = this.getLastSnapshot().players.find(({ id }) => id === credentials.id);
+
+        if (!player) {
+            return false;
+        }
+
+        const lastSnapshot = this.getLastSnapshot();
+        const newSnapshot = { ...lastSnapshot, players: lastSnapshot.players.filter(u => u !== player) };
+        this._history.push(newSnapshot);
+
+        return true;
     }
 
     addPlayer(player) {
@@ -56,14 +70,21 @@ module.exports = class Arena {
         player.x = x;
         player.y = y;
 
-        const lastStep = this.getLastStep();
-        const newStep = { ...lastStep, players: [...lastStep.players, player] };
-        this._steps.push(newStep);
+        const lastSnapshot = this.getLastSnapshot();
+        const newSnapshot = { ...lastSnapshot, players: [...lastSnapshot.players, player] };
+        this._history.push(newSnapshot);
 
         return player;
     }
 
-    getState() {
-        return this.getLastStep();
+    getStaticData() {
+        return {
+            size: this.size,
+            walls: this.walls
+        };
+    }
+
+    getFullState() {
+        return { ...this.getLastSnapshot(), ...this.getStaticData() };
     }
 };

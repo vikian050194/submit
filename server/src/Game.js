@@ -7,26 +7,25 @@ const wallPattern = [[1, 1], [1, 2], [2, 1]];
 const spawnPattern = [[0, 0]];
 
 module.exports = class Game {
-    constructor() {
-        this.capacity = names.length;
-
+    constructor(capacity = 2) {
+        this.capacity = capacity;
         this.arena = new Arena(size, wallPattern, spawnPattern);
     }
 
     join(credentials) {
-        if (credentials && credentials.id !== undefined) {
-            const player = this.arena.getState().players.find(({ id }) => id === credentials.id);
+        if (credentials && credentials.id !== null) {
+            const player = this.arena.getLastSnapshot().players.find(({ id }) => id === credentials.id);
 
             if (player) {
                 return player;
             }
         }
 
-        if (this.players.length === this.capacity) {
+        if (this.arena.getLastSnapshot().players.length === this.capacity) {
             return { id: null };
         }
 
-        const id = this.arena.getState().players.length;
+        const id = this.arena.getLastSnapshot().players.length;
 
         const player = new Player(id, names[id]);
 
@@ -34,21 +33,15 @@ module.exports = class Game {
     }
 
     leave(credentials) {
-        if (credentials && credentials.id !== undefined) {
-            const user = this.players.find(({ id }) => id === credentials.id);
-
-            if (user) {
-                this.players = this.players.filter(u => u !== user);
-                return true;
-            }
+        if (credentials && credentials.id !== null) {
+            return this.arena.removePlayer(credentials);
         }
 
         return false;
     }
 
-    submit({ id: uid, action }) {
-        const user = this.players.find(({ id }) => id === uid);
-        user.action = action;
+    submit({ id, actions }) {
+        this.arena.submitActions(id, actions);
 
         this.tryRun();
     }
@@ -76,18 +69,6 @@ module.exports = class Game {
     }
 
     getState() {
-        const {
-            size,
-            walls,
-            players,
-            capacity
-        } = this;
-
-        return {
-            size,
-            walls,
-            players,
-            capacity
-        };
+        return { ...this.arena.getFullState(), capacity: this.capacity };
     }
 };
