@@ -4,7 +4,7 @@ const defaultState = {
     size: 0,
     walls: [],
     blocks: [],
-    users: [],
+    players: [],
     capacity: 0
 };
 

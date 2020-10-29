@@ -26,7 +26,7 @@ export const Actions = ({ refresh, submit, user }) => {
 
     const renderButtons = () => {
         return <div className="buttons">
-            <span className={"button submit"} onClick={() => submit({ id: user.id, action: actions[0] })}>
+            <span className={"button submit"} onClick={() => submit({ id: user.id, actions: [actions[0]] })}>
                 submit
             </span>
             <span className={"button refresh"} onClick={refresh}>

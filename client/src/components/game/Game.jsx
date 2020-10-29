@@ -44,7 +44,7 @@ const Game = ({ user, game, getState, join, leave, submit }) => {
             <Space />
             <div className="middle">
                 <Arena arena={game} />
-                <UsersList user={user} users={game.users} join={() => join({ id: user.id })} leave={() => leave({ id: user.id })} />
+                <UsersList user={user} players={game.players} join={() => join({ id: user.id })} leave={() => leave({ id: user.id })} />
             </div>
             <Space />
             <Info value={"Some info should be here"} />

@@ -17,6 +17,7 @@ module.exports = class Arena {
         this.size = size;
         this.walls = applyPattern(size, wallPattern);
         this.spawnPoints = applyPattern(size, spawnPattern);
+        this.actions = {};
     }
 
     getSpawnPoint(id) {
@@ -75,6 +76,22 @@ module.exports = class Arena {
         this._history.push(newSnapshot);
 
         return player;
+    }
+
+    isReady() {
+        return Object.keys(this.actions).length === this.getLastSnapshot().players.length;
+    }
+
+    submitPlayerActions(id, actions) {
+        this.actions[id] = actions;
+    }
+
+    submit() {
+        const lastSnapshot = this.getLastSnapshot();
+        const players = lastSnapshot.players.map(p => { return { ...p, action: this.actions[p.id][0] }; });
+        const newSnapshot = { ...lastSnapshot, players };
+        this._history.push(newSnapshot);
+        this.actions = {};
     }
 
     getStaticData() {

@@ -62,7 +62,7 @@ module.exports = {
         publicPath: "/",
         port: 8080,
         watchContentBase: false,
-        open: true,
+        open: false,
         inline: true,
         proxy: {
             "/api": {

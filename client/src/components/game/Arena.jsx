@@ -4,17 +4,17 @@ import PropTypes from "prop-types";
 import "./Arena.css";
 
 const Arena = ({ arena }) => {
-    const { size, walls, users } = arena;
+    const { size, walls, players } = arena;
 
     const getCellClass = (x, y) => {
         if (walls.find(([wx, wy]) => wx === x && wy === y)) {
             return "wall";
         }
 
-        const user = users.find(({ x: ux, y: uy }) => ux === x && uy === y);
+        const player = players.find(({ x: ux, y: uy }) => ux === x && uy === y);
 
-        if (user) {
-            return `color-bg-${user.id}`;
+        if (player) {
+            return `color-bg-${player.id}`;
         }
 
         return "empty";

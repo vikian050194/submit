@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 import "./UsersList.css";
 
-const UsersList = ({ user, users, join, leave }) => {
-    const renderPlayers = () => users.map(u =>
+const UsersList = ({ user, players, join, leave }) => {
+    const renderPlayers = () => players.map(u =>
         <div
             key={u.id}
             className={`user color-bg-${u.id} ${user.id === u.id ? "you" : ""}`}>
@@ -37,7 +37,7 @@ const UsersList = ({ user, users, join, leave }) => {
 
 UsersList.propTypes = {
     user: PropTypes.object.isRequired,
-    users: PropTypes.array.isRequired,
+    players: PropTypes.array.isRequired,
     join: PropTypes.func.isRequired,
     leave: PropTypes.func.isRequired
 };

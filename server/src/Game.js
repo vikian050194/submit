@@ -41,30 +41,27 @@ module.exports = class Game {
     }
 
     submit({ id, actions }) {
-        this.arena.submitActions(id, actions);
+        this.arena.submitPlayerActions(id, actions);
 
-        this.tryRun();
-    }
-
-    tryRun() {
-        const isFullHouse = this.players.length === this.capacity;
-        const isActionsPrepared = !this.players.some(({ action }) => action === null);
-
-        if (isFullHouse && isActionsPrepared) {
+        if (this.arena.isReady()) {
+            this.arena.submit();
             this.run();
         }
     }
 
     run() {
-        this.players.forEach((user) => {
-            const { x, y, action } = user;
+        this.arena.getLastSnapshot().players.forEach((player) => {
+            const { x, y, action } = player;
+            
             let newX = action === 0 ? x - 1 : x;
             newX = action === 1 ? x + 1 : newX;
             let newY = action === 2 ? y - 1 : y;
             newY = action === 3 ? y + 1 : newY;
-            user.action = null;
-            user.x = newX;
-            user.y = newY;
+            
+            player.action = null;
+
+            player.x = newX;
+            player.y = newY;
         });
     }
 
