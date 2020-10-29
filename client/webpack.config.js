@@ -31,7 +31,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(jpg|jpeg|gif|png|ico)$/,
+                test: /\.(jpg|jpeg|gif|png|ico|svg)$/,
                 loader: "file-loader",
                 options: {
                     limit: 1024,
@@ -52,7 +52,7 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 { from: "src/index.html" },
-                { from: "src/favicon.ico" }
+                { from: "src/favicon.svg" }
             ]
         })
     ],
