@@ -4,9 +4,11 @@ import PropTypes from "prop-types";
 import "./Actions.css";
 
 export const Actions = ({ refresh, submit, user }) => {
-    const count = 1;
+    const count = 3;
+    const getEmptyActions = () => (new Array(count)).fill(0);
     const [actions, setActions] = useState((new Array(count)).fill(0));
-    const options = ["L", "R", "U", "D"];
+    const options = ["empty", "left", "right", "up", "down"];
+    const optionsSign = ["", "L", "R", "U", "D"];
 
     const nextAction = (index) => () => {
         const updatedAction = (actions[index] + 1) % options.length;
@@ -19,15 +21,18 @@ export const Actions = ({ refresh, submit, user }) => {
 
         return <td className="cell action" key={index}>
             <div className={classes.join(" ")} onClick={nextAction(index)}>
-                {options[a]}
+                {optionsSign[a]}
             </div>
         </td>;
     });
 
     const renderButtons = () => {
         return <div className="buttons">
-            <span className={"button submit"} onClick={() => submit({ id: user.id, actions: [actions[0]] })}>
+            <span className={"button submit"} onClick={() => submit({ id: user.id, actions: actions.map(a => options[a]) })}>
                 submit
+            </span>
+            <span className={"button clear"} onClick={() => setActions(getEmptyActions())}>
+                clear
             </span>
             <span className={"button refresh"} onClick={refresh}>
                 refresh

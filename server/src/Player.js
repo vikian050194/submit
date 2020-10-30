@@ -6,7 +6,7 @@ class Player {
         this.score = 0;
         this.x = 0;
         this.y = 0;
-        this.action = null;
+        this.actions = null;
         this.hp = 3;
     }
 }

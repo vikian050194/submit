@@ -88,7 +88,7 @@ module.exports = class Arena {
 
     submit() {
         const lastSnapshot = this.getLastSnapshot();
-        const players = lastSnapshot.players.map(p => { return { ...p, action: this.actions[p.id][0] }; });
+        const players = lastSnapshot.players.map(p => { return { ...p, actions: this.actions[p.id] }; });
         const newSnapshot = { ...lastSnapshot, players };
         this._history.push(newSnapshot);
         this.actions = {};
@@ -103,5 +103,11 @@ module.exports = class Arena {
 
     getFullState() {
         return { ...this.getLastSnapshot(), ...this.getStaticData() };
+    }
+
+    updateState({ players }) {
+        const lastSnapshot = this.getLastSnapshot();
+        const newSnapshot = { ...lastSnapshot, players };
+        this._history.push(newSnapshot);
     }
 };
