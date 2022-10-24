@@ -60,13 +60,13 @@ module.exports = {
         index: path.resolve(__dirname, buildFolderName, "index.html"),
         contentBase: path.resolve(__dirname, buildFolderName),
         publicPath: "/",
-        port: 8080,
+        port: 8000,
         watchContentBase: false,
         open: false,
         inline: true,
         proxy: {
             "/api": {
-                target: "http://localhost:8081",
+                target: "http://localhost:8080",
                 pathRewrite: {"^/api" : ""}
             }
         }

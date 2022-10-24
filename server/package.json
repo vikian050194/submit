@@ -7,7 +7,7 @@
     "dev": "node-dev src/app.js",
     "test": "mocha ./tests/**/*-tests.js",
     "cover": "nyc --reporter=html npm run test",
-    "docker": "docker run -it --rm -p 8081:8081 -v $(pwd):/var/www -w \"/var/www\" node:current-slim /bin/bash -c \"npm i && node src/app.js\""
+    "docker": "docker run -it --rm -p 8080:8080 -v $(pwd):/var/www -w \"/var/www\" node:current-slim /bin/bash -c \"npm i && node src/app.js\""
   },
   "engines": {
     "node": "^12.16.3"

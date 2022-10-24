@@ -1,87 +1,31 @@
-const randomInt = require("random-int");
-
-class Cell {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
 module.exports = class Repository {
     constructor() {
-        this.users = [];
-        this.messages = [];
-        this.walls = [];
-        this.blocks = [];
+        this.index = 0;
+        this.data = [];
+    }
 
-        const size = 10;
-        const max = size - 1;
+    create(item) {
+        this.index++;
+        item.id = this.index;
+        this.data.push(item);
+        return item;
+    }
 
-        for (let i = 0; i < size; i++) {
-            this.arena.push(new Cell(i, max));
-            this.arena.push(new Cell(max, i));
+    read(id = null) {
+        if (id === null) {
+            return this.data;
         }
 
-        for (let i = 0; i < size - 1; i++) {
-            this.arena.push(new Cell(i, 0));
-        }
-
-        for (let i = 1; i < size - 1; i++) {
-            this.arena.push(new Cell(0, i));
-        }
+        return this.data.find(item => item.id === id);
     }
 
-    getColor() {
-        let index = null;
-
-        do {
-            index = randomInt(0, 3);
-        } while ((this.users.filter((u) => u.color === index).length !== 0));
-
-        return index;
+    update(item){
+        const index = this.data.findIndex(i => i.id === item.id);
+        this.data[index] = item;
+        return item;
     }
 
-    getPosition() {
-        return {
-            x: randomInt(1, 8),
-            y: randomInt(1, 8)
-        };
-    }
-
-    getMessages() {
-        return this.messages;
-    }
-
-    addMessage(data) {
-        this.messages.push(data);
-
-        if (this.messages.length > 10) {
-            this.messages.shift();
-        }
-    }
-
-    addUser(user) {
-        const position = this.getPosition();
-        const color = this.getColor();
-        const id = generate(dictionary.lowercase, 2) + generate(dictionary.numbers, 2);
-
-        const newUser = { ...user, position, color, id };
-
-        this.users.push(newUser);
-
-        return newUser;
-    }
-
-    getUsers() {
-        return this.users;
-    }
-
-    removeUser(user) {
-        var index = this.users.indexOf(user);
-        this.users.splice(index);
-    }
-
-    getState() {
-        return { arena: this.arena };
+    delete(id){
+        this.data = this.data.filter(i => i.id !== id);
     }
 };

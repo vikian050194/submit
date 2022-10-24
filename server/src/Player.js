@@ -3,10 +3,10 @@ class Player {
         this.id = id;
         this.name = name;
 
-        this.score = 0;
         this.x = 0;
         this.y = 0;
-        this.actions = null;
+
+        this.score = 0;
         this.hp = 3;
     }
 }
