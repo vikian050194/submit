@@ -14,7 +14,7 @@ const Arena = ({ arena }) => {
         const player = players.find(({ x: ux, y: uy }) => ux === x && uy === y);
 
         if (player) {
-            return `color-bg-${player.id}`;
+            return `color-bg-${player.id-1}`;
         }
 
         return "empty";

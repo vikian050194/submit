@@ -7,9 +7,9 @@ const UsersList = ({ user, players, join, leave }) => {
     const renderPlayers = () => players.map(u =>
         <div
             key={u.id}
-            className={`user color-bg-${u.id} ${user.id === u.id ? "you" : ""}`}>
+            className={`user color-bg-${u.id-1} ${user.id === u.id ? "you" : ""}`}>
             <span>{u.name}</span>
-            <span>{u.hp}</span>
+            <span>{u.health}</span>
             <span>{u.score}</span>
         </div>
     );

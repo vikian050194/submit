@@ -62,14 +62,20 @@ module.exports = class Foo {
         }
 
         this.userRepo.create(new User({
-            name: "aaa"
+            name: "A"
         }));
         this.userRepo.create(new User({
-            name: "bbb"
+            name: "B"
         }));
     }
 
     join(credentials) {
+        const game = this.gameRepo.read()[0];
+
+        if (credentials && credentials.id === null) {
+            credentials.id = this.playerRepo.read().filter(p => p.gameId === game.id).length + 1;
+        }
+
         if (credentials && credentials.id !== null) {
             const user = this.userRepo.read(credentials.id);
 
@@ -82,8 +88,6 @@ module.exports = class Foo {
             if (player) {
                 return player;
             }
-
-            const game = this.gameRepo.read()[0];
 
             if (this.playerRepo.read().filter(p => p.gameId === game.id).length === game.capacity) {
                 return null;
@@ -133,7 +137,7 @@ module.exports = class Foo {
         return true;
     }
 
-    submit({ playerId, actions }) {
+    submit({ id: playerId, actions }) {
         const game = this.gameRepo.read()[0];
 
         // TODO make submit idempotent
@@ -178,11 +182,22 @@ module.exports = class Foo {
         for (let index = 0; index < game.slot; index++) {
             this.turn(gameId, index);
         }
-
+        game.round++;
+        this.gameRepo.update(game);
     }
 
     getState() {
         // TODO update this code
-        return { ...this.arena.getFullState(), capacity: this.capacity };
+        // return { ...this.arena.getFullState(), capacity: this.capacity };
+        const game = this.gameRepo.read()[0];
+        const arena = this.arenaRepo.read(game.arenaId);
+        const walls = this.inventoryRepo.read().filter(i => i.type === Type.WALL).map(i => [i.x, i.y]);
+        const players = this.playerRepo.read().filter(p => p.gameId === game.id);
+        return {
+            capacity: game.capacity,
+            size: arena.height,
+            walls,
+            players
+        };
     }
 };

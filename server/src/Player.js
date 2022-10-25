@@ -7,7 +7,7 @@ class Player {
         this.y = 0;
 
         this.score = 0;
-        this.hp = 3;
+        this.health = 3;
     }
 }
 
